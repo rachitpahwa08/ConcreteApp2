@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/history"
+            android:title="History" />
+        <item
+            android:id="@+id/upcoming_history"
+            android:title="Placed Order"/>
+        <item
+            android:id="@+id/purchase"
+            android:title="Purchase Orders" />
+        <item
+            android:id="@+id/site"
+            android:title="Customer Site"
+            />
+        <item
+            android:id="@+id/issue"
+            android:title="Issue"/>
+
+        <item
+            android:id="@+id/logout"
+            android:title="Logout"/>
+    </group>
+
+
+
+</menu>
