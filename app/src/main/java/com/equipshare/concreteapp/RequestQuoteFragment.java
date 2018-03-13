@@ -1,18 +1,17 @@
 package com.equipshare.concreteapp;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
+
 import android.content.Context;
 
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.ButtonBarLayout;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,18 +25,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 
 import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
-import com.equipshare.concreteapp.utils.DatePickerFragment;
+
 import com.equipshare.concreteapp.utils.DirectingClass;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -269,11 +268,6 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
                         .make(linearLayout, "Quote Requested Successfully", Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.RED);
                 snackbar.show();
-              /*  try {
-                    Log.e("TAG", "response 33: "+response.body());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 DirectingClass directingClass=new DirectingClass(getContext(),getActivity());
                 directingClass.performLogin();
             }
