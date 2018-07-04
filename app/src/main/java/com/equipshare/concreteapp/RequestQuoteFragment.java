@@ -38,6 +38,7 @@ import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -63,19 +64,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RequestQuoteFragment extends android.support.v4.app.Fragment {
 
-    private EditText validtill,quantity;
+    private EditText validtill;
+    EditText[] quantity1=new EditText[6];
     private Spinner customersite;
     private String cust_id;
-
-    String name;
+     int check=1;
+    String name,company;
+    Button r1,r2,r3,r4,r5;
     LinearLayout linearLayout;
+    LinearLayout[] quan_qual=new LinearLayout[6];
+    SessionManagement session;
     Result res1;
+    String token;
     User_ user;
     Calendar myCalendar;
-    Spinner quality;
+    Spinner[] quality=new Spinner[6];
     long milli_valdate;
     LinearLayout request;
     ProgressDialog progressDialog;
+    Button add;
+    List<String> qual;
     Gson gson = new GsonBuilder().setLenient().create();
     OkHttpClient client = new OkHttpClient();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create(gson));
@@ -87,20 +95,184 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
       final View view=inflater.inflate(R.layout.request_quote_fragment,null);
         myCalendar = Calendar.getInstance();
         validtill=(EditText)view.findViewById(R.id.quote_valid_date);
-        quantity=(EditText)view.findViewById(R.id.quote_quantity1);
+        quantity1[0]=(EditText)view.findViewById(R.id.quote_quantity1);
+        quantity1[1]=(EditText)view.findViewById(R.id.quote_quantity2);
+        quantity1[2]=(EditText)view.findViewById(R.id.quote_quantity3);
+        quantity1[3]=(EditText)view.findViewById(R.id.quote_quantity4);
+        quantity1[4]=(EditText)view.findViewById(R.id.quote_quantity5);
+        quantity1[5]=(EditText)view.findViewById(R.id.quote_quantity6);
         customersite=(Spinner)view.findViewById(R.id.customer_site_spinner);
-        quality=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner1);
+        quality[0]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner1);
+        quality[1]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner2);
+        quality[2]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner3);
+        quality[3]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner4);
+        quality[4]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner5);
+        quality[5]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner6);
         Button submit=(Button)view.findViewById(R.id.submit_quote);
+        quan_qual[0]=(LinearLayout)view.findViewById(R.id.quan_qual1);
+        quan_qual[1]=(LinearLayout)view.findViewById(R.id.quan_qual2);
+        quan_qual[2]=(LinearLayout)view.findViewById(R.id.quan_qual3);
+        quan_qual[3]=(LinearLayout)view.findViewById(R.id.quan_qual4);
+        quan_qual[4]=(LinearLayout)view.findViewById(R.id.quan_qual5);
+        quan_qual[5]=(LinearLayout)view.findViewById(R.id.quan_qual6);
+        r1=(Button)view.findViewById(R.id.delete_button_1);
+        r2=(Button)view.findViewById(R.id.delete_button_2);
+        r3=(Button)view.findViewById(R.id.delete_button_3);
+        r4=(Button)view.findViewById(R.id.delete_button_4);
+        r5=(Button)view.findViewById(R.id.delete_button_5);
+        qual=new ArrayList<>();
         linearLayout=(LinearLayout)view.findViewById(R.id.request_quote);
+        add=(Button)view.findViewById(R.id.add_button_d);
+       for(int j=1;j<6;j++)
+        {
+            quan_qual[j].setVisibility(View.GONE);
 
+        }
+        add.setVisibility(View.GONE);
+add.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+        Log.e("check", "value: "+check);
+       switch (check)
+       {
+           case 1:quan_qual[1].setVisibility(View.VISIBLE);
+                  check=2;
+                  break;
+           case 2:  quan_qual[2].setVisibility(View.VISIBLE);
+                    check=3;
+                    break;
+           case 3:  quan_qual[3].setVisibility(View.VISIBLE);
+               check=4;
+               break;
+           case 4:  quan_qual[4].setVisibility(View.VISIBLE);
+               check=5;
+               break;
+           case 5:  quan_qual[5].setVisibility(View.VISIBLE);
+                   check=6;
+                    break;
+       }
+      /*  for(int j=0;j<6;j++)
+        {
+            qual.add(quantity1[j].getText().toString());
+
+        }
+        Log.e("QuanCheck", "value :"+qual );
+        for(int j=0;j<6;j++)
+        {
+            if(qual.get(j).isEmpty())
+            {
+                qual.remove(j);
+            }
+        }
+        Log.e("QuanCheck2", "value :"+qual );
+    */}
+});
+       r1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Log.e("QuanCheck2", "value :"+check);
+               if(check==2)
+               {
+                   quan_qual[1].setVisibility(View.GONE);
+                   quantity1[1].setError(null);
+                   quantity1[1].setText("");
+                   check=1;
+               }
+               else {
+                   Log.e("QuanCheck2", "else :"+check);
+                   quantity1[1].setError("Please Remove Last Quantity and Quality");
+                   quantity1[1].requestFocus();
+                   return;
+               }
+           }
+       });
+        r2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("QuanCheck2", "value :"+check);
+                if(check==3)
+                {
+                    quan_qual[2].setVisibility(View.GONE);
+                    quantity1[2].setError(null);
+                    quantity1[2].setText("");
+                    check=2;
+                }
+                else {
+                    quantity1[2].setError("Please Remove Last Quantity and Quality");
+                    quantity1[2].requestFocus();
+                    return;
+                }
+            }
+        });
+        r3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("QuanCheck2", "value :"+check);
+                if(check==4)
+                {
+                    quan_qual[3].setVisibility(View.GONE);
+                    quantity1[3].setError(null);
+                    quantity1[3].setText("");
+                    check=3;
+                }
+                else {
+                    quantity1[3].setError("Please Remove Last Quantity and Quality");
+                    quantity1[3].requestFocus();
+                    return;
+                }
+            }
+        });
+        r4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("QuanCheck2", "value :"+check);
+                if(check==5)
+                {
+                    quan_qual[4].setVisibility(View.GONE);
+                    quantity1[4].setError(null);
+                    quantity1[4].setText("");
+                    check=4;
+                }
+                else {
+                    quantity1[4].setError("Please Remove Last Quantity and Quality");
+                    quantity1[4].requestFocus();
+                    return;
+                }
+            }
+        });
+        r5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("QuanCheck2", "value :"+check);
+               if(check==6) {
+                   quan_qual[5].setVisibility(View.GONE);
+                   quantity1[5].setError(null);
+                   quantity1[5].setText("");
+                   check = 5;
+               }
+            }
+        });
         request=(LinearLayout)view.findViewById(R.id.request_quote1);
-
+        session = new SessionManagement(getContext());
+        HashMap<String, String> user1 = session.getUserDetails();
+         token=user1.get(SessionManagement.KEY_TOKEN);
         res1=((RequestQuote)getActivity()).res;
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setMessage("Loading");
         progressDialog.setCancelable(false);
         progressDialog.show();
         Log.e("TAG", "Time instance: "+myCalendar.getTime()+Locale.getDefault());
+
+        /*add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = layoutInflater.inflate(R.layout.add_edittext, null);
+                request.addView(rowView, request.getChildCount() - 1);
+            }
+        });*/
+
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
 
@@ -128,13 +300,16 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
         });
 
 
-        Call<User_> call=retrofitInterface.show_profile(res1.getToken());
+        Call<User_> call=retrofitInterface.show_profile(token);
         call.enqueue(new Callback<User_>() {
             @Override
             public void onResponse(Call<User_> call, Response<User_> response) {
                 user =response.body();
                 Log.e("Userinfo Response ", "response 33: " + new Gson().toJson(response.body()));
                 name=user.getUser().getName();
+                company=user.getUser().getCompany();
+
+                Log.e("company name","value:"+ company);
                 if(user.getUser().getCustomerSite().isEmpty())
                 {
                     List<String> list = new ArrayList<String>();
@@ -162,7 +337,7 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
                 customersite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        cust_id=user.getUser().getCustomerSite().get(i).getId();
+                        cust_id=user.getUser().getCustomerSite().get(i).getAddress();
                     }
 
                     @Override
@@ -190,6 +365,11 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
                 progressDialog.setMessage("Processing");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+                for(int j=0;j<check;j++)
+                {
+                    qual.add(quality[j].getSelectedItem().toString());
+                }
+                Log.e("TAG", "quality" +qual);
                 startquote();
             }
         });
@@ -215,16 +395,16 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
             progressDialog.cancel();
             return;
         }
-        if(quantity.getText().toString().isEmpty()){
-            quantity.setError("Required Field");
-            quantity.requestFocus();
+        if(quantity1[0].getText().toString().isEmpty()){
+            quantity1[0].setError("Required Field");
+            quantity1[0].requestFocus();
             progressDialog.cancel();
             return;
         }
         if(customersite.getSelectedItem().toString().equals("No Site Added by User "))
         {
-            quantity.setError("No Site Selected");
-            quantity.requestFocus();
+            quantity1[0].setError("No Site Selected");
+            quantity1[0].requestFocus();
             progressDialog.cancel();
             return;
         }
@@ -236,7 +416,7 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
             return;
         }
 
-        startRequsetQuote(quantity.getText().toString(),quality.getSelectedItem().toString());
+        startRequsetQuote(quantity1[0].getText().toString(),quality[0].getSelectedItem().toString());
     }
 
     private void startRequsetQuote (String quantity, String quality)
@@ -250,26 +430,36 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
         map.put("customerSite",cust_id);
         map.put("requiredDate", String.valueOf(milli_valdate));
         map.put("requestedBy",name);
-        map.put("name",name);
+       map.put("name",name);
+        if(company==null)
+        {
+            Log.e("Company test", "individual" );
+            map.put("company","Individual");
+        }
+        else{
+            map.put("company",company);
+        }
 
-        Call<ResponseBody> call=retrofitInterface.quote_request(res1.getToken(),map);
+        Call<ResponseBody> call=retrofitInterface.quote_request(token,map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     Log.e("TAG", "response 33: "+response.body().string());
+                    Snackbar snackbar = Snackbar
+                                .make(linearLayout, "Quote Requested Successfully", Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.RED);
+                        snackbar.show();
+                        DirectingClass directingClass=new DirectingClass(getContext(),getActivity());
+                        directingClass.performLogin();
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 progressDialog.cancel();
 
-                Snackbar snackbar = Snackbar
-                        .make(linearLayout, "Quote Requested Successfully", Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.RED);
-                snackbar.show();
-                DirectingClass directingClass=new DirectingClass(getContext(),getActivity());
-                directingClass.performLogin();
+
             }
 
             @Override
@@ -278,22 +468,11 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
             }
         });
     }
-
-    private View.OnClickListener onClick() {
-        return new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                request.addView(createNewTextView(quantity.getText().toString()));
-            }
-        };
-    }
-    private TextView createNewTextView(String text) {
-        final ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final TextView textView = new TextView(getContext());
-        textView.setLayoutParams(lparams);
-        textView.setText("New text: " + text);
-        return textView;
+    public void onDelete(View view) {
+        LayoutInflater layoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = layoutInflater.inflate(R.layout.add_edittext, null);
+        request.removeView((View)rowView.getParent());
     }
 }
+
 

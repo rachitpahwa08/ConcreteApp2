@@ -115,10 +115,9 @@ public class SplashScreen extends AppCompatActivity {
 
                 }
              else{   HashMap<String, String> user = session.getUserDetails();
-                String email = user.get(SessionManagement.KEY_EMAIL);
-                String password = user.get(SessionManagement.KEY_PASS);
 
-                Call<Result> call=retrofitInterface.login(email,password);
+                String token=user.get(SessionManagement.KEY_TOKEN);
+                Call<Result> call=retrofitInterface.session_manage(token);
 
                 call.enqueue(new Callback<Result>() {
                     @Override

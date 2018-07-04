@@ -18,6 +18,7 @@ import com.equipshare.concreteapp.model.PO;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,6 +38,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class POdetails extends AppCompatActivity {
+    SessionManagement session;
     Gson gson = new GsonBuilder().setLenient().create();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).addConverterFactory(GsonConverterFactory.create(gson));
     Retrofit retrofit=builder.build();
@@ -49,11 +51,13 @@ public class POdetails extends AppCompatActivity {
         setContentView(R.layout.activity_podetails);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        session = new SessionManagement(POdetails.this);
+        HashMap<String, String> user1 = session.getUserDetails();
+       token=user1.get(SessionManagement.KEY_TOKEN);
         Intent i=getIntent();
         String customerSite;
         p=i.getParcelableExtra("PO");
         customerSite=i.getStringExtra("customersite");
-        token=i.getStringExtra("token");
         TextView gendate,valid,quantity,quality,price,requestedby,status,site;
         gendate=(TextView)findViewById(R.id.po_gen_date);
         valid=(TextView)findViewById(R.id.po_valid);
@@ -131,7 +135,7 @@ public class POdetails extends AppCompatActivity {
         quality.setText("Quality:"+p.getQuality());
         quantity.setText("Quantity:"+p.getQuantity());
         requestedby.setText("PO requested by:"+p.getRequestedBy());
-        site.setText("Customer Site:"+customerSite);
+        site.setText("Customer Site:"+p.getCustomerSite());
         if((!p.getConfirmedBySupplier())&&(!p.getDeletedByContractor()))
         {
             status.setText("PO status:In Progress");

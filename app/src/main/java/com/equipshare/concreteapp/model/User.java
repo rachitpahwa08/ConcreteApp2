@@ -42,9 +42,20 @@ public class User implements Parcelable {
     @SerializedName("__v")
     @Expose
     private Integer v;
+    @SerializedName("custType")
+    @Expose
+    private String custType;
     @SerializedName("customerSite")
     @Expose
     private List<CustomerSite> customerSite = null;
+
+    public String getCustType() {
+        return custType;
+    }
+
+    public void setCustType(String custType) {
+        this.custType = custType;
+    }
 
     public String getId() {
         return id;
@@ -154,6 +165,7 @@ public class User implements Parcelable {
         dest.writeString(this.password);
         dest.writeString(this.userType);
         dest.writeValue(this.v);
+        dest.writeString(this.custType);
         dest.writeTypedList(this.customerSite);
     }
 
@@ -168,6 +180,7 @@ public class User implements Parcelable {
         this.password = in.readString();
         this.userType = in.readString();
         this.v = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.custType = in.readString();
         this.customerSite = in.createTypedArrayList(CustomerSite.CREATOR);
     }
 

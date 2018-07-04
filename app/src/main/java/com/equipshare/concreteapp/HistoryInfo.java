@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.equipshare.concreteapp.model.Order;
 import com.equipshare.concreteapp.model.PO;
+import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
@@ -54,7 +57,7 @@ public class HistoryInfo extends AppCompatActivity {
         order=i.getParcelableExtra("Order");
         String site=i.getStringExtra("ordersite");
         token=i.getStringExtra("token");
-        TextView gendate,required_date,quality,quantity,requestedby,price,ordersite,statusdesc,supplier;
+        final TextView gendate,required_date,quality,quantity,requestedby,price,ordersite,statusdesc,supplier;
         gendate=(TextView)findViewById(R.id.order_gen_date);
         required_date=(TextView)findViewById(R.id.order_required);
         quality=(TextView)findViewById(R.id.order_quality);
@@ -97,8 +100,23 @@ public class HistoryInfo extends AppCompatActivity {
         requestedby.setText("Order Requested By:"+order.getRequestedBy());
         price.setText("Price:\u20B9"+order.getPrice());
         statusdesc.setText(order.getStatusDesc());
-        ordersite.setText("Customer Site:"+site);
-        supplier.setText("Supplier:"+order.getSupplierId());
+        ordersite.setText("Customer Site:"+order.getCustomerSite());
+        retrofitInterface=retrofit.create(RetrofitInterface.class);
+        Call<Result> call=retrofitInterface.supp_name(order.getSupplierId());
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
+                Result result=response.body();
+                supplier.setText("Supplier:"+result.getSuppname());
+            }
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Toast.makeText(HistoryInfo.this,t.getMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
+
 
         if(order.getStatus().equals("cancelled"))
         {

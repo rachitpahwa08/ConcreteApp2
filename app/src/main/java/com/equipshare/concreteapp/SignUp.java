@@ -60,6 +60,8 @@ public class SignUp extends AppCompatActivity {
            company=(EditText)findViewById(R.id.company);
            usertype=(Spinner)findViewById(R.id.user_type_spinner);
 
+           gstin.setVisibility(View.GONE);
+           pan.setVisibility(View.GONE);
            usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                @Override
                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -130,7 +132,7 @@ public class SignUp extends AppCompatActivity {
 
         }
 
-        if(gstin.getText().toString().isEmpty()){
+      /*  if(gstin.getText().toString().isEmpty()){
             gstin.setError("Required Field");
             gstin.requestFocus();
             progressDialog.cancel();
@@ -141,7 +143,7 @@ public class SignUp extends AppCompatActivity {
             pan.requestFocus();
             progressDialog.cancel();
             return;
-        }
+        }*/
 
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Call<Result> call=retrofitInterface.check_usename(email.getText().toString());
@@ -229,5 +231,6 @@ public class SignUp extends AppCompatActivity {
     {
         Intent i=new Intent(this,LoginActivity.class);
         startActivity(i);
+        finish();
     }
 }

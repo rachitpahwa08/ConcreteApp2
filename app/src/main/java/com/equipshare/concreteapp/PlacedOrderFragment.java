@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,8 +19,11 @@ import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -41,7 +45,8 @@ public class PlacedOrderFragment extends android.support.v4.app.Fragment {
     TextView empty;
     LinearLayoutManager gridLayoutManager;
     Gson gson = new GsonBuilder().setLenient().create();
-
+    SessionManagement session;
+    String token;
     OkHttpClient client = new OkHttpClient();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create(gson));
     Retrofit retrofit=builder.build();
@@ -51,6 +56,10 @@ public class PlacedOrderFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.place_fragment,null);
+        session = new SessionManagement(getContext());
+        session.checkLogin(getActivity());
+        HashMap<String, String> user1= session.getUserDetails();
+        token=user1.get(SessionManagement.KEY_TOKEN);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPlaced);
         gridLayoutManager = new LinearLayoutManager(getContext());
         gridLayoutManager.setReverseLayout(true);
@@ -62,7 +71,7 @@ public class PlacedOrderFragment extends android.support.v4.app.Fragment {
         progressDialog.setMessage("Loading");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Call<History> call=retrofitInterface.history(res.getToken());
+        Call<History> call=retrofitInterface.history(token);
         call.enqueue(new Callback<History>() {
             @Override
             public void onResponse(Call<History> call, Response<History> response) {
@@ -96,5 +105,10 @@ public class PlacedOrderFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Placed Orders");
     }
 }

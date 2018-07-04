@@ -38,6 +38,9 @@ public class Quote implements Parcelable {
     @SerializedName("__v")
     @Expose
     private Integer v;
+    @SerializedName("requestedByCompany")
+    @Expose
+    private String requestedByCompany;
     @SerializedName("responses")
     @Expose
     private List<Response> responses = null;
@@ -48,6 +51,14 @@ public class Quote implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRequestedByCompany() {
+        return requestedByCompany;
+    }
+
+    public void setRequestedByCompany(String requestedByCompany) {
+        this.requestedByCompany = requestedByCompany;
     }
 
     public String getQuantity() {
@@ -123,6 +134,9 @@ public class Quote implements Parcelable {
     }
 
 
+    public Quote() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -139,10 +153,8 @@ public class Quote implements Parcelable {
         dest.writeString(this.requestedBy);
         dest.writeString(this.requestedById);
         dest.writeValue(this.v);
-        dest.writeList(this.responses);
-    }
-
-    public Quote() {
+        dest.writeString(this.requestedByCompany);
+        dest.writeTypedList(this.responses);
     }
 
     protected Quote(Parcel in) {
@@ -155,8 +167,8 @@ public class Quote implements Parcelable {
         this.requestedBy = in.readString();
         this.requestedById = in.readString();
         this.v = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.responses = new ArrayList<Response>();
-        in.readList(this.responses, Response.class.getClassLoader());
+        this.requestedByCompany = in.readString();
+        this.responses = in.createTypedArrayList(Response.CREATOR);
     }
 
     public static final Creator<Quote> CREATOR = new Creator<Quote>() {

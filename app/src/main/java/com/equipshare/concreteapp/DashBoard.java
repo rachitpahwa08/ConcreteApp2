@@ -33,6 +33,8 @@ import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +49,7 @@ public class DashBoard extends AppCompatActivity
     User_ u;
     Result r;
     TextView name;
-
+    String token;
     boolean check;
     boolean doubleBackToExitPressedOnce = false;
     SessionManagement session;
@@ -67,6 +69,9 @@ public class DashBoard extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         session = new SessionManagement(getApplicationContext());
+        HashMap<String, String> user1 = session.getUserDetails();
+
+         token=user1.get(SessionManagement.KEY_TOKEN);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -92,7 +97,7 @@ public class DashBoard extends AppCompatActivity
 
     private void profile_getrequest()
     {
-        Call<User_> call=retrofitInterface.show_profile(r.getToken());
+        Call<User_> call=retrofitInterface.show_profile(token);
         call.enqueue(new Callback<User_>() {
             @Override
             public void onResponse(Call<User_> call, Response<User_> response) {
@@ -145,6 +150,22 @@ public class DashBoard extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.change_password) {
+            Intent intent=new Intent(DashBoard.this,ChangePassword.class);
+            startActivity(intent);
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

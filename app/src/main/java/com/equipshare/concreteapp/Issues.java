@@ -19,6 +19,7 @@ import com.equipshare.concreteapp.model.Order;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Issues extends AppCompatActivity {
     private EditText issue_title,issue_desc;
     private Spinner issue_type;
+    SessionManagement session;
     LinearLayout linearLayout;
     String token;
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -43,10 +45,14 @@ public class Issues extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issues);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent i=getIntent();
         final Order order;
         order=i.getParcelableExtra("Order");
-        token=i.getStringExtra("token");
+        session = new SessionManagement(Issues.this);
+        HashMap<String, String> user = session.getUserDetails();
+        token=user.get(SessionManagement.KEY_TOKEN);
         issue_title=(EditText)findViewById(R.id.IssueTitle);
         issue_desc=(EditText)findViewById(R.id.issue_description);
         issue_type=(Spinner)findViewById(R.id.issue_type);
@@ -90,5 +96,16 @@ public class Issues extends AppCompatActivity {
                 Toast.makeText(Issues.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

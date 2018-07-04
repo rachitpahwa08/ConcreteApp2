@@ -21,6 +21,7 @@ import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -48,7 +49,8 @@ public class History_fragment extends Fragment {
     TextView empty;
     LinearLayoutManager gridLayoutManager;
     Gson gson = new GsonBuilder().setLenient().create();
-
+    SessionManagement session;
+    String token;
     OkHttpClient client = new OkHttpClient();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create(gson));
     Retrofit retrofit=builder.build();
@@ -59,6 +61,10 @@ public class History_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.history,null);
+        session = new SessionManagement(getContext());
+        session.checkLogin(getActivity());
+        HashMap<String, String> user1 = session.getUserDetails();
+        token=user1.get(SessionManagement.KEY_TOKEN);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewHistory);
         gridLayoutManager = new LinearLayoutManager(getContext());
         gridLayoutManager.setReverseLayout(true);
@@ -70,7 +76,7 @@ public class History_fragment extends Fragment {
         progressDialog.setMessage("Loading");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Call<History> call=retrofitInterface.history(res.getToken());
+        Call<History> call=retrofitInterface.history(token);
         call.enqueue(new Callback<History>() {
             @Override
             public void onResponse(Call<History> call, Response<History> response) {
@@ -79,7 +85,7 @@ public class History_fragment extends Fragment {
                 Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
                CustomAdapter customAdapter=new CustomAdapter(history.getOrders(),user.getUser().getCustomerSite(),res.getToken());
                 recyclerView.setAdapter(customAdapter);
-
+                Log.e("TAG", "count 33: "+gridLayoutManager.getItemCount());
                 progressDialog.cancel();
                 if(gridLayoutManager.getItemCount()==0)
                 {

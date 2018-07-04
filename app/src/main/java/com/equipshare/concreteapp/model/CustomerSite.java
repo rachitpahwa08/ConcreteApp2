@@ -24,6 +24,17 @@ public class CustomerSite implements Parcelable {
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("city")
+    @Expose
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getAddress() {
         return address;
@@ -65,6 +76,9 @@ public class CustomerSite implements Parcelable {
         this.id = id;
     }
 
+    public CustomerSite() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -77,9 +91,7 @@ public class CustomerSite implements Parcelable {
         dest.writeString(this.lat);
         dest.writeString(this.name);
         dest.writeString(this.id);
-    }
-
-    public CustomerSite() {
+        dest.writeString(this.city);
     }
 
     protected CustomerSite(Parcel in) {
@@ -88,9 +100,10 @@ public class CustomerSite implements Parcelable {
         this.lat = in.readString();
         this.name = in.readString();
         this.id = in.readString();
+        this.city = in.readString();
     }
 
-    public static final Parcelable.Creator<CustomerSite> CREATOR = new Parcelable.Creator<CustomerSite>() {
+    public static final Creator<CustomerSite> CREATOR = new Creator<CustomerSite>() {
         @Override
         public CustomerSite createFromParcel(Parcel source) {
             return new CustomerSite(source);

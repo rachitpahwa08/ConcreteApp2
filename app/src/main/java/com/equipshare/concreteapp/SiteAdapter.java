@@ -1,6 +1,7 @@
 package com.equipshare.concreteapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import com.equipshare.concreteapp.model.User;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -53,7 +55,8 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
     Context context;
     Activity activity;
     Result result;
-
+    SessionManagement session;
+ProgressDialog progressDialog;
     public SiteAdapter(List<CustomerSite> siteList, User user, RelativeLayout relativeLayout, Context context, Activity activity, Result result) {
         this.siteList = siteList;
         this.user=user;
@@ -72,13 +75,23 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-       if(siteList.isEmpty())
+        session = new SessionManagement(context);
+        HashMap<String, String> user1 = session.getUserDetails();
+        final String token=user1.get(SessionManagement.KEY_TOKEN);
+        if(siteList.isEmpty())
        {
 
        }
        else
        {holder.sitename.setText("Site Name:"+siteList.get(position).getName());
         holder.siteaddress.setText(siteList.get(position).getAddress());
+       if(siteList.get(position).getCity()!=null)
+       {
+           holder.cityname.setText("City:"+siteList.get(position).getCity());
+       }
+       else {
+           holder.cityname.setVisibility(View.GONE);
+       }
         holder.deletesite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -89,16 +102,20 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                progressDialog=new ProgressDialog(context);
+                                progressDialog.setMessage("Deleting Site");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
                                 Map<String,String> map=new HashMap<>();
                                 map.put("siteid",siteList.get(position).getId());
-                                Call<Result> call=retrofitInterface.delete_site(result.getToken(),map);
+                                Call<Result> call=retrofitInterface.delete_site(token,map);
                                 call.enqueue(new Callback<Result>() {
                                     @Override
                                     public void onResponse(Call<Result> call, Response<Result> response) {
                                        Result r=response.body();
                                         if(r.getMsg().equals("site deleted"))
-                                        {Snackbar snackbar = Snackbar
+                                        {progressDialog.cancel();
+                                            Snackbar snackbar = Snackbar
                                                 .make(relativeLayout, "Site Deleted Successfully", Snackbar.LENGTH_LONG);
                                         snackbar.setActionTextColor(Color.RED);
                                         snackbar.show();
@@ -107,6 +124,7 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
                                         directingClass.performLogin();
                                     }
                                     else {
+                                            progressDialog.cancel();
                                             Toast.makeText(context,"Cannot Delete Site",Toast.LENGTH_LONG).show();
                                         }}
 
@@ -134,12 +152,13 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
 
     public  class ViewHolder extends  RecyclerView.ViewHolder{
 
-        public TextView sitename,siteaddress;
+        public TextView sitename,siteaddress,cityname;
         Button deletesite;
         public ViewHolder(View itemView) {
             super(itemView);
             sitename = (TextView) itemView.findViewById(R.id.site_name);
             siteaddress=(TextView)itemView.findViewById(R.id.siteaddress);
+            cityname=(TextView)itemView.findViewById(R.id.city_name);
             deletesite=(Button)itemView.findViewById(R.id.delete_site);
         }
     }

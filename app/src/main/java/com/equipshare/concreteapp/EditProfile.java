@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.model.User;
+import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -34,8 +36,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class EditProfile extends AppCompatActivity {
      EditText name,email,contact,pan,gst;
      LinearLayout linearLayout;
-    User user;
+    User_ user;
     Result result;
+    SessionManagement session;
+    String token;
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
     public static Retrofit retrofit=builder.build();
@@ -48,17 +52,20 @@ public class EditProfile extends AppCompatActivity {
         Intent i=getIntent();
         user=i.getParcelableExtra("user");
         result=i.getParcelableExtra("Result");
+        session = new SessionManagement(EditProfile.this);
+        HashMap<String, String> user1 = session.getUserDetails();
+        token=user1.get(SessionManagement.KEY_TOKEN);
         name=(EditText)findViewById(R.id.name);
         email=(EditText)(EditText)findViewById(R.id.email_profile);
         contact=(EditText)findViewById(R.id.contact_profile);
         pan=(EditText)findViewById(R.id.pan_profile);
         gst=(EditText)findViewById(R.id.gst_profile);
         linearLayout=(LinearLayout)findViewById(R.id.edit_profile);
-        name.setText(user.getName());
-        email.setText(user.getEmail());
-        contact.setText(String.valueOf(user.getContact()));
-        pan.setText(user.getPan());
-        gst.setText(user.getGstin());
+        name.setText(user.getUser().getName());
+        email.setText(user.getUser().getEmail());
+        contact.setText(String.valueOf(user.getUser().getContact()));
+        pan.setText(user.getUser().getPan());
+        gst.setText(user.getUser().getGstin());
         Button submit=(Button)findViewById(R.id.submit_profile);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,13 +113,13 @@ public class EditProfile extends AppCompatActivity {
     {
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,String> map=new HashMap<>();
-        map.put("id",user.getId());
+        map.put("id",user.getUser().getId());
         map.put("name",name.getText().toString());
         map.put("email",email.getText().toString());
         map.put("contact",contact.getText().toString());
         map.put("pan",pan.getText().toString());
         map.put("gstin",gst.getText().toString());
-        Call<ResponseBody> call=retrofitInterface.edit_profile(result.getToken(),map,user.getCustomerSite());
+        Call<ResponseBody> call=retrofitInterface.edit_profile(token,map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -164,9 +164,10 @@ public class LoginActivity extends AppCompatActivity {
                  progressDialog.cancel();
                  mEmailView.setError("Invalid Username");
                  mEmailView.requestFocus();
+                 return;
               }
-               boolean check=result.getSuccess();
-
+               boolean check=false;
+               check=result.getSuccess();
                if(!check)
               {
                   new AlertDialog.Builder(LoginActivity.this)
@@ -198,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
            @Override
            public void onFailure(Call<Result> call, Throwable t) {
                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+               Log.e("TAG", "error: " + t);
                progressDialog.cancel();
            }
 

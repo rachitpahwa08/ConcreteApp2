@@ -7,7 +7,7 @@
     <string name="e_petition">Request error</string>
     <string name="server_response">SERVER_RESPONSE</string>
     <string name="server_message">SERVER_MESSAGE</string>
-
+    <string name="gst_check">Please Add GSTIN and PAN</string>
     <string name="sharedPreferences">com.example.jarvis.constructionapp</string>
 
     <string name="drawer_open">Open</string>
@@ -123,5 +123,6 @@ It is defined as the minimum strength the concrete must posses after 28 days of 
     <string name="M70">M70: M70 concrete mix with 10% silica fume showed least abrasion loss and was selected for use in the construction project.</string>
     <string name="M80">M80: It is used in bridges, ultra-thin white topping etc and constructions in aggressive environment e.g. Spillways of dams, coastal construction</string>
     <string name="M100">M100: It is used in constructing building like Burj Khalifa.</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

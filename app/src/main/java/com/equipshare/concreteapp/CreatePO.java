@@ -27,6 +27,7 @@ import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.DirectingClass;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class CreatePO extends AppCompatActivity {
     String cust_id,supp_id,token,site;
     LinearLayout linearLayout;
     long price_string=-1;
-
+    SessionManagement session;
     long milli_valdate;
     Calendar myCalendar;
     String povalid="val";
@@ -67,11 +68,14 @@ public class CreatePO extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        session = new SessionManagement(CreatePO.this);
+        session.checkLogin(CreatePO.this);
+        HashMap<String, String> user = session.getUserDetails();
         Intent i=getIntent();
         quote=i.getParcelableExtra("Quote");
         setContentView(R.layout.activity_create_po);
         site=i.getStringExtra("sitename");
-        token=i.getStringExtra("token");
+        token=user.get(SessionManagement.KEY_TOKEN);
         supp_name=i.getStringExtra("name");
         supp_id=i.getStringExtra("suppid");
         price_string=i.getLongExtra("price",0);
@@ -175,6 +179,7 @@ public class CreatePO extends AppCompatActivity {
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,String> map=new HashMap<>();
 
+        String s=quote.getRequestedByCompany();
         map.put("validTill",povalid);
         map.put("quantity",quantity);
         map.put("quality",quality);
@@ -183,7 +188,11 @@ public class CreatePO extends AppCompatActivity {
         map.put("requestedBy",quote.getRequestedBy());
         map.put("requestedById",quote.getRequestedById());
         map.put("supplierId",supp_id);
-
+        if(s==null)
+        {map.put("companyName","Individual");}
+        else {
+            map.put("companyName",quote.getRequestedByCompany());
+        }
         Call<ResponseBody> call=retrofitInterface.create_po(token,map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

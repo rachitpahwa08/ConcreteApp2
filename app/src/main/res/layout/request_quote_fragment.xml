@@ -58,50 +58,251 @@
                     android:entries="@array/listofplant" />
             </LinearLayout>
 
-
-            <LinearLayout
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                >
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual1">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantity"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
 
+                </android.support.design.widget.TextInputLayout>
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quality:" />
-
+                    android:text="Quality:"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"/>
                 <Spinner
                     android:id="@+id/quote_qualtiy_spinner1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/add_button_d"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:entries="@array/Quality_Type" />
+                    android:background="@drawable/ic_add_circle_outline_24dp"
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity:"
-        android:layout_marginEnd="22dp"/>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual2">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quality"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
 
-    <EditText
-        android:id="@+id/quote_quantity1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:inputType="number"
-        android:layout_marginEnd="22dp"
-        />
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:id="@+id/quote_qualtiy_spinner2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/delete_button_1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_remove_circle_outline_24dp"
+                    android:layout_marginTop="10dp"
+                    />
+            </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual3">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quality"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
 
-</LinearLayout>
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:id="@+id/quote_qualtiy_spinner3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/delete_button_2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_remove_circle_outline_24dp"
+                    android:layout_marginTop="10dp"
+                    />
+            </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual4">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quality"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
 
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:id="@+id/quote_qualtiy_spinner4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/delete_button_3"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_remove_circle_outline_24dp"
+                    android:layout_marginTop="10dp"
+                   />
+            </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual5">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quality"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:id="@+id/quote_qualtiy_spinner5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/delete_button_4"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_remove_circle_outline_24dp"
+                    android:layout_marginTop="10dp"
+                   />
+            </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:id="@+id/quan_qual6">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+                    <EditText
+                        android:id="@+id/quote_quantity6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quality"
+                        android:inputType="number"
+                        android:layout_marginEnd="12dp"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:id="@+id/quote_qualtiy_spinner6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:entries="@array/Quality_Type"
+                    android:layout_marginTop="10dp" />
+                <Button
+                    android:id="@+id/delete_button_5"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_remove_circle_outline_24dp"
+                    android:layout_marginTop="10dp"
+                    />
+            </LinearLayout>
             <Button
                 android:id="@+id/submit_quote"
                 android:layout_width="match_parent"

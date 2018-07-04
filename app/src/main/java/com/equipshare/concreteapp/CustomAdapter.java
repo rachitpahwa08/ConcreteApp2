@@ -67,7 +67,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             public void onClick(View view) {
                 Intent i=new Intent(view.getContext(),HistoryInfo.class);
                 i.putExtra("Order", order);
-                i.putExtra("ordersite",getSitename(my_data.get(holder.getAdapterPosition()).getCustomerSite()));
+               // i.putExtra("ordersite",getSitename(my_data.get(holder.getAdapterPosition()).getCustomerSite()));
+                 i.putExtra("ordersite",my_data.get(holder.getAdapterPosition()).getCustomerSite());
                 i.putExtra("token",token);
                 view.getContext().startActivity(i);
             }

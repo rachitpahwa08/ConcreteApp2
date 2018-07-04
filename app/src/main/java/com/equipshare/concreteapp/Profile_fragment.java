@@ -23,14 +23,13 @@ import com.equipshare.concreteapp.model.User_;
  */
 
 public class Profile_fragment extends Fragment {
-
+    User_ user;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.profile_fragment,container,false);
-
-        User_ user=((DashBoard)getActivity()).u;
+        user=((DashBoard)getActivity()).u;
         final Result result=((DashBoard)getActivity()).r;
         final User u=user.getUser();
         TextView name=(TextView) view.findViewById(R.id.Name);
@@ -43,11 +42,22 @@ public class Profile_fragment extends Fragment {
         LinearLayout company_layout=(LinearLayout) view.findViewById(R.id.company_layout);
         FloatingActionButton fab=(FloatingActionButton)view.findViewById(R.id.edit_profile);
         name.setText(u.getName());
-        customerprofile.setText(u.getUserType());
         email.setText(u.getEmail());
         contactNo.setText(String.valueOf(u.getContact()));
         pan.setText(u.getPan());
         gst.setText(u.getGstin());
+        if(u.getCustType()!=null) {
+            if(u.getCustType().equals("Individual"))
+            {
+              customerprofile.setText(u.getCustType());
+            }
+            else{
+              customerprofile.setText("Contractor");
+            }
+        }
+        else{
+            customerprofile.setText(u.getUserType());
+        }
         if(u.getCompany()!=null)
         {
             company.setText(u.getCompany());
@@ -60,7 +70,7 @@ public class Profile_fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),EditProfile.class);
-                intent.putExtra("user",u);
+                intent.putExtra("user",user);
                 intent.putExtra("Result",result);
                 startActivity(intent);
             }

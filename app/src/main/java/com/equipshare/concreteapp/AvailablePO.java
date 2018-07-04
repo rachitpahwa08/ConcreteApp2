@@ -24,6 +24,7 @@ import com.equipshare.concreteapp.model.User;
 import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,6 +48,8 @@ public class AvailablePO extends Fragment {
     TextView empty;
     Result r1;
     User_ user;
+    SessionManagement session;
+    String token;
     ProgressDialog progressDialog;
     Gson gson = new GsonBuilder().create();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).addConverterFactory(GsonConverterFactory.create(gson));
@@ -57,6 +60,10 @@ public class AvailablePO extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.available_po,null);
+        session = new SessionManagement(getContext());
+        session.checkLogin(getActivity());
+        HashMap<String, String> user1 = session.getUserDetails();
+        token=user1.get(SessionManagement.KEY_TOKEN);
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerViewPO);
         final LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
         gridLayoutManager.setReverseLayout(true);
@@ -69,7 +76,7 @@ public class AvailablePO extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
        // Log.e("TAG", "response 33: " + r1.getUser().getId());
-        Call<POget> call=retrofitInterface.getpo(r1.getToken());
+        Call<POget> call=retrofitInterface.getpo(token);
         call.enqueue(new Callback<POget>() {
             @Override
             public void onResponse(Call<POget> call, retrofit2.Response<POget> response) {

@@ -48,13 +48,12 @@ public class DirectingClass
   public void performLogin()
   {
       session = new SessionManagement(context);
-      // Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
       session.checkLogin(activity);
       HashMap<String, String> user = session.getUserDetails();
+      String token=user.get(SessionManagement.KEY_TOKEN);
       String email = user.get(SessionManagement.KEY_EMAIL);
       String password = user.get(SessionManagement.KEY_PASS);
-      String token=user.get(SessionManagement.KEY_TOKEN);
-      Call<Result> call=retrofitInterface.login(email,password);
+      Call<Result> call=retrofitInterface.session_manage(token);
 
       call.enqueue(new Callback<Result>() {
           @Override

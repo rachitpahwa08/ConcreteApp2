@@ -79,7 +79,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("/api/profile")
-    Call<ResponseBody>edit_profile(@Header("authorization") String authtoken,@FieldMap Map<String,String> map, @Field("customerSite")List<CustomerSite> customersite);
+    Call<ResponseBody>edit_profile(@Header("authorization") String authtoken,@FieldMap Map<String,String> map);
 
     @GET("/api/profile")
    Call<User_>show_profile(@Header("authorization")String authtoken);
@@ -103,4 +103,10 @@ public interface RetrofitInterface {
     @POST("/api/doesexist")
     Call<Result>check_usename(@Field("email") String email);
 
+    @GET("/api/getcities")
+    Call<Result>get_cityname();
+
+    @FormUrlEncoded
+    @POST("/api/changepass")
+    Call<Result>change_pass(@Header("authorization") String authtoken,@FieldMap Map<String,String> map);
 }

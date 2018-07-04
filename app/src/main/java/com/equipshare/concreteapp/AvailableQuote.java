@@ -20,10 +20,12 @@ import com.equipshare.concreteapp.model.Result;
 import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
+import com.equipshare.concreteapp.utils.SessionManagement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -49,10 +51,15 @@ public class AvailableQuote extends Fragment {
     RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
     List<CustomerSite> site;
     ProgressDialog progressDialog;
+    String token;
+    SessionManagement session;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.available_quote,container,false);
+        session = new SessionManagement(getContext());
+        HashMap<String, String> user1 = session.getUserDetails();
+     token=user1.get(SessionManagement.KEY_TOKEN);
         recyclerView=(RecyclerView)view.findViewById(R.id.quote_recyclerview);
        gridLayoutManager = new LinearLayoutManager(getContext());
         gridLayoutManager.setReverseLayout(true);
@@ -64,7 +71,7 @@ public class AvailableQuote extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
         Log.e("USER Quote", "value:"+u );
-        Call<User_> call=retrofitInterface.show_profile(res1.getToken());
+        Call<User_> call=retrofitInterface.show_profile(token);
         call.enqueue(new Callback<User_>() {
             @Override
             public void onResponse(Call<User_> call, Response<User_> response) {
