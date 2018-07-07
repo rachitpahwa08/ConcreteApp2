@@ -11,19 +11,21 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class User implements Parcelable {
-
-    @SerializedName("_id")
+    @SerializedName("userId")
     @Expose
-    private String id;
+    private Integer userId;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("custType")
+    @Expose
+    private String custType;
     @SerializedName("contact")
     @Expose
-    private long contact;
+    private Integer contact;
     @SerializedName("pan")
     @Expose
     private String pan;
@@ -39,30 +41,22 @@ public class User implements Parcelable {
     @SerializedName("userType")
     @Expose
     private String userType;
-    @SerializedName("__v")
+    @SerializedName("resetPasswordExpire")
     @Expose
-    private Integer v;
-    @SerializedName("custType")
+    private String resetPasswordExpire;
+    @SerializedName("resetPasswordToken")
     @Expose
-    private String custType;
-    @SerializedName("customerSite")
+    private String resetPasswordToken;
+    @SerializedName("verified")
     @Expose
-    private List<CustomerSite> customerSite = null;
+    private String verified;
 
-    public String getCustType() {
-        return custType;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setCustType(String custType) {
-        this.custType = custType;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -81,11 +75,19 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-    public long getContact() {
+    public String getCustType() {
+        return custType;
+    }
+
+    public void setCustType(String custType) {
+        this.custType = custType;
+    }
+
+    public Integer getContact() {
         return contact;
     }
 
-    public void setContact(long contact) {
+    public void setContact(Integer contact) {
         this.contact = contact;
     }
 
@@ -95,6 +97,14 @@ public class User implements Parcelable {
 
     public void setPan(String pan) {
         this.pan = pan;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getGstin() {
@@ -121,31 +131,28 @@ public class User implements Parcelable {
         this.userType = userType;
     }
 
-    public Integer getV() {
-        return v;
+    public String getResetPasswordExpire() {
+        return resetPasswordExpire;
     }
 
-    public String getCompany() {
-        return company;
+    public void setResetPasswordExpire(String resetPasswordExpire) {
+        this.resetPasswordExpire = resetPasswordExpire;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
     }
 
-    public void setV(Integer v) {
-        this.v = v;
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 
-    public List<CustomerSite> getCustomerSite() {
-        return customerSite;
+    public String getVerified() {
+        return verified;
     }
 
-    public void setCustomerSite(List<CustomerSite> customerSite) {
-        this.customerSite = customerSite;
-    }
-
-    public User() {
+    public void setVerified(String verified) {
+        this.verified = verified;
     }
 
     @Override
@@ -155,36 +162,41 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeValue(this.userId);
         dest.writeString(this.name);
         dest.writeString(this.email);
-        dest.writeLong(this.contact);
+        dest.writeString(this.custType);
+        dest.writeValue(this.contact);
         dest.writeString(this.pan);
         dest.writeString(this.company);
         dest.writeString(this.gstin);
         dest.writeString(this.password);
         dest.writeString(this.userType);
-        dest.writeValue(this.v);
-        dest.writeString(this.custType);
-        dest.writeTypedList(this.customerSite);
+        dest.writeString(this.resetPasswordExpire);
+        dest.writeString(this.resetPasswordToken);
+        dest.writeString(this.verified);
+    }
+
+    public User() {
     }
 
     protected User(Parcel in) {
-        this.id = in.readString();
+        this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
         this.email = in.readString();
-        this.contact = in.readLong();
+        this.custType = in.readString();
+        this.contact = (Integer) in.readValue(Integer.class.getClassLoader());
         this.pan = in.readString();
         this.company = in.readString();
         this.gstin = in.readString();
         this.password = in.readString();
         this.userType = in.readString();
-        this.v = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.custType = in.readString();
-        this.customerSite = in.createTypedArrayList(CustomerSite.CREATOR);
+        this.resetPasswordExpire = in.readString();
+        this.resetPasswordToken = in.readString();
+        this.verified = in.readString();
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         @Override
         public User createFromParcel(Parcel source) {
             return new User(source);

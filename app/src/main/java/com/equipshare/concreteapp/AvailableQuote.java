@@ -78,7 +78,7 @@ public class AvailableQuote extends Fragment {
                 u=response.body();
                 Log.e("Userinfo Response ", "response 33: " + new Gson().toJson(response.body()));
                 //name=user.getUser().getName();
-                 site=u.getUser().getCustomerSite();
+                 site=u.getCustomerSite();
                 QuotesAdapter quotesAdapter=new QuotesAdapter(res1.getResults().getQuotes(),site,u,res1.getToken());
                 recyclerView.setAdapter(quotesAdapter);
                 progressDialog.cancel();

@@ -93,7 +93,7 @@ public class Purchase_fragment extends Fragment {
 
                 Log.e("TAG", "response 33: " + new Gson().toJson(response.body()));
                 Log.e("TAG", "response 33: " + response.body());
-                PoAdapter poAdapter=new PoAdapter(pOget.getData(),user.getUser().getCustomerSite(),r1.getToken());
+                PoAdapter poAdapter=new PoAdapter(pOget.getData(),user.getCustomerSite(),r1.getToken());
                 recyclerView.setAdapter(poAdapter);
                 progressDialog.cancel();
                 if(gridLayoutManager.getItemCount()==0)

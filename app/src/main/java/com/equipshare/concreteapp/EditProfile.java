@@ -113,7 +113,7 @@ public class EditProfile extends AppCompatActivity {
     {
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,String> map=new HashMap<>();
-        map.put("id",user.getUser().getId());
+        map.put("id",String.valueOf(user.getUser().getUserId()));
         map.put("name",name.getText().toString());
         map.put("email",email.getText().toString());
         map.put("contact",contact.getText().toString());

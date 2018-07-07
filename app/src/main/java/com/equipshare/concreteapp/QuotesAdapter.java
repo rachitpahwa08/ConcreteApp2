@@ -45,6 +45,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        Log.e("quote Adapter", "long value "+quoteList.get(position).getGenerationDate());
         long milliseconds=Long.parseLong(quoteList.get(position).getGenerationDate());
         Date date = new Date(milliseconds);
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM,yyyy", Locale.ENGLISH);

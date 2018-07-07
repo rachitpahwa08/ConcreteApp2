@@ -43,7 +43,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("/api/requestquote")
-    Call<ResponseBody>quote_request(@Header("authorization") String authtoken,@FieldMap Map<String,String> map);
+    Call<ResponseBody>quote_request(@Header("authorization") String authtoken,@FieldMap Map<String,String> map,@Field("quality") List<String> qual,@Field("quantity") List<String> quan);
 
     @FormUrlEncoded
     @POST("/api/cancelquote")

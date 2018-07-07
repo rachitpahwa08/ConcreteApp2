@@ -47,10 +47,10 @@ public class PO implements Parcelable {
     private Integer v;
     @SerializedName("deletedByContractor")
     @Expose
-    private Boolean deletedByContractor;
+    private String deletedByContractor;
     @SerializedName("confirmedBySupplier")
     @Expose
-    private Boolean confirmedBySupplier;
+    private String confirmedBySupplier;
 
     public String getId() {
         return id;
@@ -147,19 +147,19 @@ public class PO implements Parcelable {
         this.v = v;
     }
 
-    public Boolean getDeletedByContractor() {
+    public String getDeletedByContractor() {
         return deletedByContractor;
     }
 
-    public void setDeletedByContractor(Boolean deletedByContractor) {
+    public void setDeletedByContractor(String  deletedByContractor) {
         this.deletedByContractor = deletedByContractor;
     }
 
-    public Boolean getConfirmedBySupplier() {
+    public String getConfirmedBySupplier() {
         return confirmedBySupplier;
     }
 
-    public void setConfirmedBySupplier(Boolean confirmedBySupplier) {
+    public void setConfirmedBySupplier(String confirmedBySupplier) {
         this.confirmedBySupplier = confirmedBySupplier;
     }
 
@@ -200,8 +200,8 @@ public class PO implements Parcelable {
         this.requestedById = in.readString();
         this.supplierId = in.readString();
         this.v = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.deletedByContractor = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.confirmedBySupplier = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.deletedByContractor = (String) in.readValue(String.class.getClassLoader());
+        this.confirmedBySupplier = (String) in.readValue(String.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<PO> CREATOR = new Parcelable.Creator<PO>() {

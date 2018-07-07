@@ -171,7 +171,7 @@ public class OrderBook extends AppCompatActivity {
                 user_ = response.body();
                 Log.e("Userinfo Response ", "response 33: " + new Gson().toJson(response.body()));
                 name = user_.getUser().getName();
-                id = user_.getUser().getId();
+                id = String.valueOf(user_.getUser().getUserId());
                 company_name=user_.getUser().getCompany();
                 List<String> list = new ArrayList<String>();
                 supp_list = new ArrayList<String>();
@@ -179,10 +179,10 @@ public class OrderBook extends AppCompatActivity {
                 list1=new ArrayList<>();
                 quantity_list = new ArrayList<Long>();
                 ArrayAdapter<String> adapter;
-                for (int j = 0; j < user_.getUser().getCustomerSite().size(); j++) {
-                    list.add(user_.getUser().getCustomerSite().get(j).getName());
+                for (int j = 0; j < user_.getCustomerSite().size(); j++) {
+                    list.add(user_.getCustomerSite().get(j).getName());
                 }
-                if (user_.getUser().getCustomerSite().isEmpty()) {
+                if (user_.getCustomerSite().isEmpty()) {
                     list.add("No Site Available");
                     adapter = new ArrayAdapter<String>(OrderBook.this,
                             android.R.layout.simple_spinner_item, list);
@@ -207,8 +207,8 @@ public class OrderBook extends AppCompatActivity {
                             progressDialog.setMessage("Loading");
                             progressDialog.setCancelable(false);
                             progressDialog.show();
-                            cust_site = user_.getUser().getCustomerSite().get(i).getId();
-                            cust_address=user_.getUser().getCustomerSite().get(i).getAddress();
+                            cust_site = user_.getCustomerSite().get(i).getId();
+                            cust_address=user_.getCustomerSite().get(i).getAddress();
                             Call<POget> cal = retrofitInterface.getpo(token);
                             cal.enqueue(new Callback<POget>() {
                                 @Override
@@ -232,7 +232,7 @@ public class OrderBook extends AppCompatActivity {
                                         qual_list.clear();
                                         quantity_list.clear();
                                     for (int j = 0; j < pOget.getData().size(); j++) {
-                                        if (cust_site.equals(pOget.getData().get(j).getCustomerSite())&&!pOget.getData().get(j).getDeletedByContractor()&&pOget.getData().get(j).getConfirmedBySupplier()) {
+                                        if (cust_site.equals(pOget.getData().get(j).getCustomerSite())&&pOget.getData().get(j).getDeletedByContractor().equals("false")&&pOget.getData().get(j).getConfirmedBySupplier().equals("true")) {
                                             list1.add(pOget.getData().get(j).getSupplierId());
                                             poid.add(pOget.getData().get(j).getId());
                                             qual_list.add(pOget.getData().get(j).getQuality());
@@ -243,7 +243,7 @@ public class OrderBook extends AppCompatActivity {
                                             }
                                             else quantity_list.add(Long.valueOf(pOget.getData().get(j).getRemQuantity()));
                                         }
-                                        else if(cust_address.equals(pOget.getData().get(j).getCustomerSite())&&!pOget.getData().get(j).getDeletedByContractor()&&pOget.getData().get(j).getConfirmedBySupplier())
+                                        else if(cust_address.equals(pOget.getData().get(j).getCustomerSite())&&pOget.getData().get(j).getDeletedByContractor().equals("false")&&pOget.getData().get(j).getConfirmedBySupplier().equals("true"))
                                             {
                                                 list1.add(pOget.getData().get(j).getSupplierId());
                                                 poid.add(pOget.getData().get(j).getId());

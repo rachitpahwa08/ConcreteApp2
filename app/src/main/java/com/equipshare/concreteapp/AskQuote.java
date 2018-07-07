@@ -123,9 +123,9 @@ public class AskQuote extends Fragment {
         final List<String> valdate_list=new ArrayList<>();
         final List<String> quantity_list=new ArrayList<>();
         ArrayAdapter<String> adapter;
-        for(int j=0;j<user.getUser().getCustomerSite().size();j++)
+        for(int j=0;j<user.getCustomerSite().size();j++)
         {
-            list.add(user.getUser().getCustomerSite().get(j).getName());
+            list.add(user.getCustomerSite().get(j).getName());
         }
         adapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, list);
@@ -134,7 +134,7 @@ public class AskQuote extends Fragment {
         customersite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cust_id=user.getUser().getCustomerSite().get(i).getId();
+                cust_id=user.getCustomerSite().get(i).getId();
             }
 
             @Override
@@ -220,7 +220,7 @@ public class AskQuote extends Fragment {
         map.put("price", String.valueOf(price_string));
         map.put("customerSite",cust_id);
         map.put("requestedBy",user.getUser().getName());
-        map.put("requestedById",user.getUser().getId());
+        map.put("requestedById",String.valueOf(user.getUser().getUserId()));
         map.put("supplierId",supp_id);
 
         Call<ResponseBody> call=retrofitInterface.create_po(resl.getToken(),map);

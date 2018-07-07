@@ -60,11 +60,12 @@ public class PoAdapter extends RecyclerView.Adapter<PoAdapter.PoViewHolder> {
 
         holder.gendate.setText(formatter.format(date));
         holder.price.setText("\u20B9"+String.valueOf(poList.get(position).getPrice()));
-        if(!poList.get(position).getConfirmedBySupplier()&&!poList.get(position).getDeletedByContractor())
+        Log.d("getcbs", poList.get(position).getConfirmedBySupplier());
+        if(poList.get(position).getConfirmedBySupplier().equals("false")&&poList.get(position).getDeletedByContractor().equals("false"))
         {
             holder.confirm_status.setText("Not Confirmed");
         }
-        else if(poList.get(position).getDeletedByContractor())
+        else if(poList.get(position).getDeletedByContractor().equals("true"))
         {
             holder.confirm_status.setText("PO deleted");
         }

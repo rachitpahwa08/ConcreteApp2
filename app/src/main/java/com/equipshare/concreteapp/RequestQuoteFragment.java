@@ -83,7 +83,7 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
     LinearLayout request;
     ProgressDialog progressDialog;
     Button add;
-    List<String> qual;
+    List<String> qual,quan;
     Gson gson = new GsonBuilder().setLenient().create();
     OkHttpClient client = new OkHttpClient();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create(gson));
@@ -121,6 +121,7 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
         r4=(Button)view.findViewById(R.id.delete_button_4);
         r5=(Button)view.findViewById(R.id.delete_button_5);
         qual=new ArrayList<>();
+        quan=new ArrayList<>();
         linearLayout=(LinearLayout)view.findViewById(R.id.request_quote);
         add=(Button)view.findViewById(R.id.add_button_d);
        for(int j=1;j<6;j++)
@@ -128,7 +129,7 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
             quan_qual[j].setVisibility(View.GONE);
 
         }
-        add.setVisibility(View.GONE);
+        //add.setVisibility(View.GONE);
 add.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -152,20 +153,7 @@ add.setOnClickListener(new View.OnClickListener() {
                    check=6;
                     break;
        }
-      /*  for(int j=0;j<6;j++)
-        {
-            qual.add(quantity1[j].getText().toString());
-
-        }
-        Log.e("QuanCheck", "value :"+qual );
-        for(int j=0;j<6;j++)
-        {
-            if(qual.get(j).isEmpty())
-            {
-                qual.remove(j);
-            }
-        }
-        Log.e("QuanCheck2", "value :"+qual );
+      /*
     */}
 });
        r1.setOnClickListener(new View.OnClickListener() {
@@ -310,7 +298,7 @@ add.setOnClickListener(new View.OnClickListener() {
                 company=user.getUser().getCompany();
 
                 Log.e("company name","value:"+ company);
-                if(user.getUser().getCustomerSite().isEmpty())
+                if(user.getCustomerSite().isEmpty())
                 {
                     List<String> list = new ArrayList<String>();
                     ArrayAdapter<String> adapter;
@@ -324,9 +312,9 @@ add.setOnClickListener(new View.OnClickListener() {
                 else{
                 List<String> list = new ArrayList<String>();
                 ArrayAdapter<String> adapter;
-                for(int j=0;j<user.getUser().getCustomerSite().size();j++)
+                for(int j=0;j<user.getCustomerSite().size();j++)
                 {
-                    list.add(user.getUser().getCustomerSite().get(j).getName());
+                    list.add(user.getCustomerSite().get(j).getName());
                 }
 
                 adapter = new ArrayAdapter<String>(view.getContext(),
@@ -337,7 +325,7 @@ add.setOnClickListener(new View.OnClickListener() {
                 customersite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        cust_id=user.getUser().getCustomerSite().get(i).getAddress();
+                        cust_id=user.getCustomerSite().get(i).getAddress();
                     }
 
                     @Override
@@ -368,6 +356,8 @@ add.setOnClickListener(new View.OnClickListener() {
                 for(int j=0;j<check;j++)
                 {
                     qual.add(quality[j].getSelectedItem().toString());
+                    quan.add(quantity1[j].getText().toString());
+
                 }
                 Log.e("TAG", "quality" +qual);
                 startquote();
@@ -416,6 +406,8 @@ add.setOnClickListener(new View.OnClickListener() {
             return;
         }
 
+
+
         startRequsetQuote(quantity1[0].getText().toString(),quality[0].getSelectedItem().toString());
     }
 
@@ -425,8 +417,8 @@ add.setOnClickListener(new View.OnClickListener() {
         Log.e("TAG", "response 33: "+cust_id+name+milli_valdate);
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,String> map=new HashMap<>();
-        map.put("quality",quality);
-        map.put("quantity",quantity);
+       // map.put("quality",qual);
+        //map.put("quantity",quan);
         map.put("customerSite",cust_id);
         map.put("requiredDate", String.valueOf(milli_valdate));
         map.put("requestedBy",name);
@@ -439,13 +431,13 @@ add.setOnClickListener(new View.OnClickListener() {
         else{
             map.put("company",company);
         }
-
-        Call<ResponseBody> call=retrofitInterface.quote_request(token,map);
+        Log.e("TAG", "quality"+qual+"quantity"+quan);
+        Call<ResponseBody> call=retrofitInterface.quote_request(token,map,qual,quan);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Log.e("TAG", "response 33: "+response.body().string());
+                  Log.e("TAG", "response 33: "+response.body().string());
                     Snackbar snackbar = Snackbar
                                 .make(linearLayout, "Quote Requested Successfully", Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.RED);
@@ -468,11 +460,7 @@ add.setOnClickListener(new View.OnClickListener() {
             }
         });
     }
-    public void onDelete(View view) {
-        LayoutInflater layoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = layoutInflater.inflate(R.layout.add_edittext, null);
-        request.removeView((View)rowView.getParent());
-    }
+
 }
 
 

@@ -69,7 +69,7 @@ public class POdetails extends AppCompatActivity {
         site=(TextView)findViewById(R.id.po_site);
         linearLayout=(LinearLayout)findViewById(R.id.podetails);
         Button button=(Button)findViewById(R.id.deletepobutton);
-        if(p.getConfirmedBySupplier())
+        if(p.getConfirmedBySupplier().equals("true"))
         {
             View view=findViewById(R.id.deletepobutton);
             view.setVisibility(View.GONE);
@@ -136,11 +136,11 @@ public class POdetails extends AppCompatActivity {
         quantity.setText("Quantity:"+p.getQuantity());
         requestedby.setText("PO requested by:"+p.getRequestedBy());
         site.setText("Customer Site:"+p.getCustomerSite());
-        if((!p.getConfirmedBySupplier())&&(!p.getDeletedByContractor()))
+        if((p.getConfirmedBySupplier().equals("false"))&&(p.getDeletedByContractor().equals("false")))
         {
             status.setText("PO status:In Progress");
         }
-        else if(p.getDeletedByContractor())
+        else if(p.getDeletedByContractor().equals("true"))
         {
             status.setText("PO status:PO deleted");
             button.setVisibility(View.GONE);

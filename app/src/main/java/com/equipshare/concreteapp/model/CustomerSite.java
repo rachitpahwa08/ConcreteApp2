@@ -12,7 +12,7 @@ public class CustomerSite implements Parcelable {
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("long")
+    @SerializedName("lon")
     @Expose
     private String _long;
     @SerializedName("lat")
@@ -21,7 +21,7 @@ public class CustomerSite implements Parcelable {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("_id")
+    @SerializedName("customersiteId")
     @Expose
     private String id;
     @SerializedName("city")

@@ -83,7 +83,7 @@ public class History_fragment extends Fragment {
                 History history=response.body();
                 Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
                 Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
-               CustomAdapter customAdapter=new CustomAdapter(history.getOrders(),user.getUser().getCustomerSite(),res.getToken());
+               CustomAdapter customAdapter=new CustomAdapter(history.getOrders(),user.getCustomerSite(),res.getToken());
                 recyclerView.setAdapter(customAdapter);
                 Log.e("TAG", "count 33: "+gridLayoutManager.getItemCount());
                 progressDialog.cancel();

@@ -78,7 +78,7 @@ public class PlacedOrderFragment extends android.support.v4.app.Fragment {
                 History history=response.body();
                 Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
                 Log.e("TAG", "response 33: "+new Gson().toJson(response.body()));
-                PlacedOrderAdapter placedOrderAdapter=new PlacedOrderAdapter(history.getOrders(),user.getUser().getCustomerSite(),res.getToken());
+                PlacedOrderAdapter placedOrderAdapter=new PlacedOrderAdapter(history.getOrders(),user.getCustomerSite(),res.getToken());
                 recyclerView.setAdapter(placedOrderAdapter);
 
                 progressDialog.cancel();

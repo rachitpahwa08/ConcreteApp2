@@ -50,7 +50,7 @@ public class SiteFragment extends Fragment
         recyclerView=(RecyclerView)view.findViewById(R.id.siteRecyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),1);
         recyclerView.setLayoutManager(gridLayoutManager);
-        SiteAdapter siteAdapter=new SiteAdapter(user.getUser().getCustomerSite(),user.getUser(),relativeLayout,getContext(),getActivity(),result);
+        SiteAdapter siteAdapter=new SiteAdapter(user.getCustomerSite(),user.getUser(),relativeLayout,getContext(),getActivity(),result);
         recyclerView.setAdapter(siteAdapter);
         if(gridLayoutManager.getItemCount()==0)
         {
