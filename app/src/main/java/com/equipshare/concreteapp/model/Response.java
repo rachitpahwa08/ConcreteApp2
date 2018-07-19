@@ -10,18 +10,29 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Response implements Parcelable {
+    @SerializedName("rmxId")
+    @Expose
+    private Integer rmxId;
     @SerializedName("validTill")
     @Expose
     private String validTill;
-    @SerializedName("price")
+    @SerializedName("quoteId")
     @Expose
-    private Integer price;
-    @SerializedName("rmxId")
+    private Integer quoteId;
+    @SerializedName("userId")
     @Expose
-    private String rmxId;
-    @SerializedName("_id")
+    private Integer userId;
+    @SerializedName("id")
     @Expose
-    private String id;
+    private Integer id;
+
+    public Integer getRmxId() {
+        return rmxId;
+    }
+
+    public void setRmxId(Integer rmxId) {
+        this.rmxId = rmxId;
+    }
 
     public String getValidTill() {
         return validTill;
@@ -31,27 +42,27 @@ public class Response implements Parcelable {
         this.validTill = validTill;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getQuoteId() {
+        return quoteId;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setQuoteId(Integer quoteId) {
+        this.quoteId = quoteId;
     }
 
-    public String getRmxId() {
-        return rmxId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setRmxId(String rmxId) {
-        this.rmxId = rmxId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,20 +73,22 @@ public class Response implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.rmxId);
         dest.writeString(this.validTill);
-        dest.writeValue(this.price);
-        dest.writeString(this.rmxId);
-        dest.writeString(this.id);
+        dest.writeValue(this.quoteId);
+        dest.writeValue(this.userId);
+        dest.writeValue(this.id);
     }
 
     public Response() {
     }
 
     protected Response(Parcel in) {
+        this.rmxId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.validTill = in.readString();
-        this.price = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.rmxId = in.readString();
-        this.id = in.readString();
+        this.quoteId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Response> CREATOR = new Parcelable.Creator<Response>() {

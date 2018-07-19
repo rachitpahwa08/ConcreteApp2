@@ -35,12 +35,12 @@ public class SessionManagement {
     private static final String IS_LOGIN = "IsLoggedIn";
 
 
-    // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
     public static final String KEY_PASS = "password";
 
     public static final String KEY_TOKEN ="token";
+    public static final String FIREBASE_KEY_TOKEN ="firebasetoken";
     // Constructor
     public SessionManagement(Context context){
         this._context = context;
@@ -67,7 +67,11 @@ public class SessionManagement {
         // commit changes
         editor.commit();
     }
-
+public void addfirebasetoken(String token)
+{
+    editor.putString(FIREBASE_KEY_TOKEN,token);
+    editor.commit();
+}
     /**
      * Check login method wil check user login status
      * If false it will redirect user to login page

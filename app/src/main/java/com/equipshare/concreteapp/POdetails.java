@@ -45,6 +45,9 @@ public class POdetails extends AppCompatActivity {
     PO p;
     String token;
     LinearLayout linearLayout;
+    TextView[] quality=new TextView[5];
+    TextView[] quantity=new TextView[5];
+    TextView[] price =new TextView[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +61,43 @@ public class POdetails extends AppCompatActivity {
         String customerSite;
         p=i.getParcelableExtra("PO");
         customerSite=i.getStringExtra("customersite");
-        TextView gendate,valid,quantity,quality,price,requestedby,status,site;
+        TextView gendate,valid,requestedby,status,site;
         gendate=(TextView)findViewById(R.id.po_gen_date);
         valid=(TextView)findViewById(R.id.po_valid);
-        quantity=(TextView)findViewById(R.id.po_quantity);
-        quality=(TextView)findViewById(R.id.po_quality);
+       /* quantity=(TextView)findViewById(R.id.po_quantity);
+        quality=(TextView)findViewById(R.id.po_quality);*/
         requestedby=(TextView)findViewById(R.id.po_request);
         status=(TextView)findViewById(R.id.po_status);
-        price=(TextView)findViewById(R.id.po_price);
         site=(TextView)findViewById(R.id.po_site);
+        quality[0]=(TextView)findViewById(R.id.qual1_podetails);
+        quality[1]=(TextView)findViewById(R.id.qual2_podetails);
+        quality[2]=(TextView)findViewById(R.id.qual3_podetails);
+        quality[3]=(TextView)findViewById(R.id.qual4_podetails);
+        quality[4]=(TextView)findViewById(R.id.qual5_podetails);
+        quantity[0]=(TextView)findViewById(R.id.quan1_podetails);
+        quantity[1]=(TextView)findViewById(R.id.quan2_podetails);
+        quantity[2]=(TextView)findViewById(R.id.quan3_podetails);
+        quantity[3]=(TextView)findViewById(R.id.quan4_podetails);
+        quantity[4]=(TextView)findViewById(R.id.quan5_podetails);
+        price[0]=(TextView)findViewById(R.id.price1_podetails);
+        price[1]=(TextView)findViewById(R.id.price2_podetails);
+        price[2]=(TextView)findViewById(R.id.price3_podetails);
+        price[3]=(TextView)findViewById(R.id.price4_podetails);
+        price[4]=(TextView)findViewById(R.id.price5_podetails);
         linearLayout=(LinearLayout)findViewById(R.id.podetails);
         Button button=(Button)findViewById(R.id.deletepobutton);
+        for(int k=0;k<p.getValues().size();k++)
+        {
+            quality[k].setText(p.getValues().get(k).getQuality());
+            quantity[k].setText(p.getValues().get(k).getQuantity());
+            price[k].setText(p.getValues().get(k).getPrice());
+        }
+        for(int z=p.getValues().size();z<5;z++)
+        {
+            quality[z].setVisibility(View.GONE);
+            quantity[z].setVisibility(View.GONE);
+            price[z].setVisibility(View.GONE);
+        }
         if(p.getConfirmedBySupplier().equals("true"))
         {
             View view=findViewById(R.id.deletepobutton);
@@ -87,7 +116,7 @@ public class POdetails extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
                                 Map<String,String> map=new HashMap<>();
-                                map.put("id",p.getId());
+                                map.put("id", String.valueOf(p.getPOId()));
                                 Call<ResponseBody> call=retrofitInterface.delete_po(token,map);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
@@ -96,7 +125,7 @@ public class POdetails extends AppCompatActivity {
                                                 .make(linearLayout, "PO Deleted Successfully", Snackbar.LENGTH_LONG);
                                         snackbar.setActionTextColor(Color.RED);
                                         snackbar.show();
-                                        Log.e("TAG", "response 33: "+response.body()+"id="+p.getId());
+                                        Log.e("TAG", "response 33: "+response.body()+"id="+p.getPOId());
                                     DirectingClass directingClass=new DirectingClass(POdetails.this,POdetails.this);
                                     directingClass.performLogin();
                                     }
@@ -124,16 +153,20 @@ public class POdetails extends AppCompatActivity {
         {
             valid.setText("PO valid till:"+p.getValidTill());
         }
+
        else {
-            long valid_milli = Long.parseLong(p.getValidTill());
+            if(p.getValidTill().equals("07 September,2019"))
+            {
+                valid.setText("PO Vaild Till:"+p.getValidTill());
+            }
+          else{  long valid_milli = Long.parseLong(p.getValidTill());
             Date date1 = new Date(valid_milli);
             valid.setText("PO valid till:" + formatter.format(date1));
-        }}
+        }}}
         else {
            valid.setText("PO valid till:"+p.getValidTill());
           }
-        quality.setText("Quality:"+p.getQuality());
-        quantity.setText("Quantity:"+p.getQuantity());
+
         requestedby.setText("PO requested by:"+p.getRequestedBy());
         site.setText("Customer Site:"+p.getCustomerSite());
         if((p.getConfirmedBySupplier().equals("false"))&&(p.getDeletedByContractor().equals("false")))
@@ -149,7 +182,7 @@ public class POdetails extends AppCompatActivity {
             status.setText("PO status:Confirmed");
 
 
-        price.setText("Price:\u20B9"+p.getPrice());
+
     }
 
     @Override

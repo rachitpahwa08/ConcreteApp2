@@ -50,7 +50,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         Date date = new Date(milliseconds);
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM,yyyy", Locale.ENGLISH);
         holder.gendate.setText(formatter.format(date));
-        holder.customersite.setText(getSitename(quoteList.get(position).getCustomerSite()));
+        holder.customersite.setText(quoteList.get(position).getCustomerSite());
         holder.requestedby.setText("Requested By"+quoteList.get(position).getRequestedBy());
 
         holder.info.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             public void onClick(View view) {
                 Intent i=new Intent(view.getContext(),QuoteInfo.class);
                 i.putExtra("quote", quoteList.get(position));
-                i.putExtra("customersite_quote",getSitename(quoteList.get(position).getCustomerSite()));
+                i.putExtra("customersite_quote",quoteList.get(position).getCustomerSite());
                 i.putExtra("User",u);
                 i.putExtra("token",token);
                 view.getContext().startActivity(i);

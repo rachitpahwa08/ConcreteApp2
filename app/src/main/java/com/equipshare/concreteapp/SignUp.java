@@ -124,6 +124,13 @@ public class SignUp extends AppCompatActivity {
             progressDialog.cancel();
             return;
         }
+        if(password.getText().length()<8)
+        {
+            password.setError("Password should contain minimum 8 characters");
+            password.requestFocus();
+            progressDialog.cancel();
+            return;
+        }
         if(!confirm_password.getText().toString().equals(password.getText().toString())){
             confirm_password.setError("Password does not match");
             confirm_password.requestFocus();
@@ -221,6 +228,15 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 progressDialog.cancel();
+                if(t.getMessage().contains("timout"))
+                {
+                    new android.support.v7.app.AlertDialog.Builder(getApplicationContext())
+                            .setTitle("Some Error Occurred")
+                            .setMessage("Try After Sometime")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", null).show();
+                }
+
                  Toast.makeText(SignUp.this,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });

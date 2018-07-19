@@ -8,6 +8,10 @@
     android:background="@drawable/construction"
     android:orientation="vertical"
     tools:context="com.equipshare.concreteapp.QuoteInfo">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,6 +34,163 @@
             android:layout_marginTop="4dp"
             android:background="#000" />
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value1"
+                    android:textSize="18sp"
+                    android:id="@+id/quan1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value2"
+                    android:textSize="18sp"
+                    android:id="@+id/quan2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value3"
+                    android:textSize="18sp"
+                    android:id="@+id/quan3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value4"
+                    android:textSize="18sp"
+                    android:id="@+id/quan4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value5"
+                    android:textSize="18sp"
+                    android:id="@+id/quan5"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quality"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value1"
+                    android:textSize="18sp"
+                    android:id="@+id/qual1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value2"
+                    android:textSize="18sp"
+                    android:id="@+id/qual2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value3"
+                    android:textSize="18sp"
+                    android:id="@+id/qual3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value4"
+                    android:textSize="18sp"
+                    android:id="@+id/qual4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value5"
+                    android:textSize="18sp"
+                    android:id="@+id/qual5"/>
+            </LinearLayout>
+
+
+          <!--  <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/quote_price">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value1"
+                    android:textSize="20sp"
+                    android:id="@+id/price1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value2"
+                    android:textSize="20sp"
+                    android:id="@+id/price2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value3"
+                    android:textSize="20sp"
+                    android:id="@+id/price3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value4"
+                    android:textSize="20sp"
+                    android:id="@+id/price4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="value5"
+                    android:textSize="20sp"
+                    android:id="@+id/price5"/>
+            </LinearLayout>-->
+        </LinearLayout>
         <TextView
             android:id="@+id/Quote_gen_date"
             android:layout_width="match_parent"
@@ -37,31 +198,11 @@
             android:layout_marginTop="12dp"
             android:text="TextView"
             android:textSize="20sp" />
-
-
-
-        <TextView
-            android:id="@+id/Quote_quality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/Quote_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
-
-
         <TextView
             android:id="@+id/Quote_site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
             android:textSize="20sp" />
 
@@ -70,11 +211,11 @@
             android:id="@+id/Quote_requestedby"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
             android:textSize="20sp" />
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp">
@@ -91,55 +232,35 @@
                 android:ems="10"
                 android:entries="@array/response_id"
                 />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/Quote_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textSize="20sp" />
-        <TextView
-            android:id="@+id/Quote_valdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="20sp"
-            android:layout_marginTop="12dp"/>
+        </LinearLayout>-->
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/placepo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/colorPrimary"
-                    android:paddingEnd="30dp"
-                    android:text="         Accept Quote"
-                    android:textColor="#fff" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/deletequotebutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:text="Delete Quote"
-                    android:layout_marginLeft="12dp"
-                    android:textColor="#fff"
-                    android:layout_marginTop="12dp"/>
-            </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:layout_height="wrap_content"
+                android:text="Responses:"
+                android:textSize="22sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="No Response"
+                android:textSize="22sp"
+                android:id="@+id/response_status"/>
         </LinearLayout>
 
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/quote_recyclerview_response"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_marginTop="12dp"/>
 
     </LinearLayout>
+</ScrollView>
 </LinearLayout>

@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="#E74C3C"
+            android:background="#218AFF"
             android:text="Raise Issue"
             android:textColor="#fff" />
 

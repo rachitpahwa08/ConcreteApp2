@@ -9,97 +9,264 @@
     android:orientation="vertical"
     tools:context="com.equipshare.concreteapp.POdetails">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+      <android.support.v7.widget.CardView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:cardCornerRadius="12dp"
+              android:layout_marginStart="10dp"
+              android:layout_marginEnd="10dp">
+      <ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="12dp"
+              android:layout_marginRight="12dp"
+              android:layout_marginTop="12dp"
+              android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="PO Information"
-            android:textSize="30sp" />
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:text="PO Information"
+                  android:textSize="30sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="4dp"
-            android:background="#000" />
+              <View
+                  android:layout_width="match_parent"
+                  android:layout_height="2dp"
+                  android:layout_marginTop="4dp"
+                  android:background="#000" />
 
-        <TextView
-            android:id="@+id/po_gen_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp">
+                  <LinearLayout
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/po_valid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Quantity"
+                          android:textSize="22sp"
+                          android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/po_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value1"
+                          android:textSize="18sp"
+                          android:id="@+id/quan1_podetails"/>
 
-        <TextView
-            android:id="@+id/po_quality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value2"
+                          android:textSize="18sp"
+                          android:id="@+id/quan2_podetails"/>
 
-        <TextView
-            android:id="@+id/po_site"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value3"
+                          android:textSize="18sp"
+                          android:id="@+id/quan3_podetails"/>
 
-        <TextView
-            android:id="@+id/po_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value4"
+                          android:textSize="18sp"
+                          android:id="@+id/quan4_podetails"/>
 
-        <TextView
-            android:id="@+id/po_request"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value5"
+                          android:textSize="18sp"
+                          android:id="@+id/quan5_podetails"/>
+                  </LinearLayout>
 
-        <TextView
-            android:id="@+id/po_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            android:textSize="20sp" />
+                  <LinearLayout
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical">
 
-        <Button
-            android:id="@+id/deletepobutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Delete PO"
-            android:textColor="#fff" />
-    </LinearLayout>
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Quality"
+                          android:textSize="22sp"
+                          android:textStyle="bold" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value1"
+                          android:textSize="18sp"
+                          android:id="@+id/qual1_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value2"
+                          android:textSize="18sp"
+                          android:id="@+id/qual2_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value3"
+                          android:textSize="18sp"
+                          android:id="@+id/qual3_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value4"
+                          android:textSize="18sp"
+                          android:id="@+id/qual4_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value5"
+                          android:textSize="18sp"
+                          android:id="@+id/qual5_podetails"/>
+                  </LinearLayout>
+
+
+                  <LinearLayout
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:id="@+id/quote_price">
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Price"
+                          android:textSize="22sp"
+                          android:textStyle="bold" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value1"
+                          android:textSize="18sp"
+                          android:id="@+id/price1_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value2"
+                          android:textSize="18sp"
+                          android:id="@+id/price2_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value3"
+                          android:textSize="18sp"
+                          android:id="@+id/price3_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value4"
+                          android:textSize="18sp"
+                          android:id="@+id/price4_podetails"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="value5"
+                          android:textSize="18sp"
+                          android:id="@+id/price5_podetails"/>
+                  </LinearLayout>
+              </LinearLayout>
+              <TextView
+                  android:id="@+id/po_gen_date"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+              <TextView
+                  android:id="@+id/po_valid"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+              <!--<TextView
+                  android:id="@+id/po_quantity"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+              <TextView
+                  android:id="@+id/po_quality"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />-->
+
+              <TextView
+                  android:id="@+id/po_site"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+
+              <TextView
+                  android:id="@+id/po_request"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+              <TextView
+                  android:id="@+id/po_status"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:text="TextView"
+                  android:textSize="20sp" />
+
+              <Button
+                  android:id="@+id/deletepobutton"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@color/colorPrimary"
+                  android:text="Delete PO"
+                  android:textColor="#fff"
+                  android:layout_marginTop="10dp"/>
+          </LinearLayout>
+      </ScrollView>
+      </android.support.v7.widget.CardView>
+
+  </LinearLayout>
 </LinearLayout>

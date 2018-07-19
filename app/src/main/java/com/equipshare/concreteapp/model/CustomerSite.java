@@ -21,7 +21,7 @@ public class CustomerSite implements Parcelable {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("customersiteId")
+    @SerializedName("customerSiteId")
     @Expose
     private String id;
     @SerializedName("city")

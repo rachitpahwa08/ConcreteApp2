@@ -54,7 +54,7 @@ public class PlacedOrderAdapter extends RecyclerView.Adapter<PlacedOrderAdapter.
             holder.orderdate.setText(formatter.format(date));
             holder.status.setText(my_data.get(position).getStatus());
             holder.requestedby.setText("Order Requested By:"+my_data.get(position).getRequestedBy());
-            holder.price.setText("\u20B9"+my_data.get(position).getPrice());
+
 
             final Order order=my_data.get(position);
             holder.button.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,6 @@ public class PlacedOrderAdapter extends RecyclerView.Adapter<PlacedOrderAdapter.
             orderdate = (TextView) itemView.findViewById(R.id.order_date_placed);
             status=(TextView)itemView.findViewById(R.id.status_placed);
             requestedby=(TextView)itemView.findViewById(R.id.requestedby_placed);
-            price=(TextView)itemView.findViewById(R.id.price_placed);
             button=(Button)itemView.findViewById(R.id.placed_details);
             cardView=(CardView)itemView.findViewById(R.id.placed_card);
         }

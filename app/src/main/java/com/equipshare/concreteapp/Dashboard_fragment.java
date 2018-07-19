@@ -1,6 +1,7 @@
 package com.equipshare.concreteapp;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.equipshare.concreteapp.model.Quote;
 import com.equipshare.concreteapp.model.Result;
@@ -37,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Dashboard_fragment extends Fragment {
 
     Result res1;
+    TextView msg;
     User_ u;
     CardView cardView;
     SessionManagement session;
@@ -51,6 +54,68 @@ public class Dashboard_fragment extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.dashboard_fragment, container, false);
+        cardView = rootView.findViewById(R.id.gstnotcomp);
+        cardView.setVisibility(View.GONE);
+        session = new SessionManagement(getContext());
+        msg=(TextView)rootView.findViewById(R.id.msg);
+        res1=((DashBoard)getActivity()).r;
+        u=((DashBoard)getActivity()).u;
+        final User_ user=((DashBoard)getActivity()).u;
+        final Result result=((DashBoard)getActivity()).r;
+        final Button request_quote = (Button) rootView.findViewById(R.id.quote_request);
+        final Button order_book = (Button) rootView.findViewById(R.id.order_book);
+        HashMap<String, String> user1 = session.getUserDetails();
+        String token=user1.get(SessionManagement.KEY_TOKEN);
+        Call<User_> call=retrofitInterface.show_profile(token);
+        call.enqueue(new Callback<User_>() {
+            @Override
+            public void onResponse(Call<User_> call, Response<User_> response) {
+                u=response.body();
+                Log.e("Dashboard fragment", "getprofile: " + new Gson().toJson(response.body()));
+                Log.e("cust_site", "value:"+u.getCustomerSite());
+                if(u.getCustomerSite().isEmpty()&&u!=null) {
+                    msg.setText("Please Add Construction Site to Continue");
+                    order_book.setEnabled(false);
+                    request_quote.setEnabled(false);
+                    cardView.setVisibility(View.VISIBLE);
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(getContext(),AddSite.class);
+                            //intent.putExtra("user",u);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                else if(res1.getResults().getQuotes().isEmpty()){
+                    Log.e("quote", "value:"+res1.getResults().getQuotes());
+                    Log.e("Dashboard fragment", "getprofile: " + new Gson().toJson(res1));
+                    cardView.setVisibility(View.VISIBLE);
+                    msg.setText("Please Add Quotation");
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(getContext(),RequestQuote.class);
+                            //intent.putExtra("user",u);
+                            intent.putExtra("User",user);
+                            intent.putExtra("Result",result);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+                else {
+                    cardView.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User_> call, Throwable t) {
+                Log.e("TAG", "response 33: " + t.getMessage());
+
+            }
+        });
        //Set onclick Listener for buttons in Dashboard fragment
         Button about_concrete = (Button) rootView.findViewById(R.id.about_concrete);
         about_concrete.setOnClickListener(new View.OnClickListener() {
@@ -68,9 +133,8 @@ public class Dashboard_fragment extends Fragment {
                 startActivity(intent);
             }
         });
-        Button order_book = (Button) rootView.findViewById(R.id.order_book);
-        res1=((DashBoard)getActivity()).r;
-        u=((DashBoard)getActivity()).u;
+
+
         Log.e("Dashboard fragment", "response 33: " + u+"rseult:"+res1);
         order_book.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +145,7 @@ public class Dashboard_fragment extends Fragment {
                 startActivity(intent);
             }
         });
-        final User_ user=((DashBoard)getActivity()).u;
-        final Result result=((DashBoard)getActivity()).r;
-        Button request_quote = (Button) rootView.findViewById(R.id.quote_request);
+
         request_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,39 +155,7 @@ public class Dashboard_fragment extends Fragment {
                 startActivity(intent);
             }
         });
-        cardView = rootView.findViewById(R.id.gstnotcomp);
-        cardView.setVisibility(View.GONE);
-        session = new SessionManagement(getContext());
-        HashMap<String, String> user1 = session.getUserDetails();
 
-        String token=user1.get(SessionManagement.KEY_TOKEN);
-        Call<User_> call=retrofitInterface.show_profile(token);
-        call.enqueue(new Callback<User_>() {
-            @Override
-            public void onResponse(Call<User_> call, Response<User_> response) {
-                u=response.body();
-                Log.e("Dashboard fragment", "getprofile: " + new Gson().toJson(response.body()));
-                if(u.getUser().getGstin()==null||u.getUser().getPan()==null&&u!=null) {
-                    cardView.setVisibility(View.VISIBLE);
-                    cardView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent=new Intent(getContext(),EditProfile.class);
-                            intent.putExtra("user",u);
-                            startActivity(intent);
-                        }
-                    });
-                }
-                else {
-                    cardView.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User_> call, Throwable t) {
-                Log.e("TAG", "response 33: " + t.getMessage());
-            }
-        });
 
         return rootView;
 

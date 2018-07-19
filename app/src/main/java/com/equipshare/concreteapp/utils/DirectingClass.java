@@ -51,8 +51,6 @@ public class DirectingClass
       session.checkLogin(activity);
       HashMap<String, String> user = session.getUserDetails();
       String token=user.get(SessionManagement.KEY_TOKEN);
-      String email = user.get(SessionManagement.KEY_EMAIL);
-      String password = user.get(SessionManagement.KEY_PASS);
       Call<Result> call=retrofitInterface.session_manage(token);
 
       call.enqueue(new Callback<Result>() {

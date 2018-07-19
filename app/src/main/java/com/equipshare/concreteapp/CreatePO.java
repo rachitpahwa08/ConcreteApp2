@@ -47,7 +47,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreatePO extends AppCompatActivity {
-    private EditText validtill,quantity,price,customersite,supplier;
+    private EditText validtill,customersite,supplier;
 
     String cust_id,supp_id,token,site;
     LinearLayout linearLayout;
@@ -59,7 +59,15 @@ public class CreatePO extends AppCompatActivity {
     String supp_name;
     Quote quote;
     User_ user;
+    long price1;
+    ArrayList<String> qlist;
+    ArrayList<String> price_list;
+    ArrayList<String> quantity_list;
     ProgressDialog progressDialog;
+    EditText[] quality=new EditText[5];
+    EditText[] quantity=new EditText[5];
+    EditText[] priceview=new EditText[5];
+    LinearLayout[] linearLayouts=new LinearLayout[5];
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
     public static Retrofit retrofit=builder.build();
@@ -78,18 +86,34 @@ public class CreatePO extends AppCompatActivity {
         token=user.get(SessionManagement.KEY_TOKEN);
         supp_name=i.getStringExtra("name");
         supp_id=i.getStringExtra("suppid");
-        price_string=i.getLongExtra("price",0);
+        price_list=i.getStringArrayListExtra("price");
+        price1=i.getLongExtra("totalprice",0);
         myCalendar = Calendar.getInstance();
         validtill=(EditText)findViewById(R.id.valid_date);
-        quantity=(EditText)findViewById(R.id.quantity);
         customersite=(EditText) findViewById(R.id.customersite);
-        price=(EditText)findViewById(R.id.price_PO);
-
-        EditText quality1=(EditText)findViewById(R.id.quality_po);
+        quality[0]=(EditText)findViewById(R.id.Quality_po1);
+        quality[1]=(EditText)findViewById(R.id.Quality_po2);
+        quality[2]=(EditText)findViewById(R.id.Quality_po3);
+        quality[3]=(EditText)findViewById(R.id.Quality_po4);
+        quality[4]=(EditText)findViewById(R.id.Quality_po5);
+        quantity[0]=(EditText)findViewById(R.id.Quantity_po1);
+        quantity[1]=(EditText)findViewById(R.id.Quantity_po2);
+        quantity[2]=(EditText)findViewById(R.id.Quantity_po3);
+        quantity[3]=(EditText)findViewById(R.id.Quantity_po4);
+        quantity[4]=(EditText)findViewById(R.id.Quantity_po5);
+        priceview[0]=(EditText)findViewById(R.id.price_po1);
+        priceview[1]=(EditText)findViewById(R.id.price_po2);
+        priceview[2]=(EditText)findViewById(R.id.price_po3);
+        priceview[3]=(EditText)findViewById(R.id.price_po4);
+        priceview[4]=(EditText)findViewById(R.id.price_po5);
+        linearLayouts[0]=(LinearLayout)findViewById(R.id.po_quan_qua11);
+        linearLayouts[1]=(LinearLayout)findViewById(R.id.po_quan_qua12);
+        linearLayouts[2]=(LinearLayout)findViewById(R.id.po_quan_qua13);
+        linearLayouts[3]=(LinearLayout)findViewById(R.id.po_quan_qua14);
+        linearLayouts[4]=(LinearLayout)findViewById(R.id.po_quan_qua15);
         supplier=(EditText)findViewById(R.id.supplier);
         Button submit=(Button)findViewById(R.id.submit_createPO);
         linearLayout=(LinearLayout)findViewById(R.id.createpo);
-        price.setText("0");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,30 +147,43 @@ public class CreatePO extends AppCompatActivity {
 
 
         List<String> list = new ArrayList<String>();
-        final List<String> qlist = new ArrayList<String>();
-        final List<Integer> price_list = new ArrayList<>();
+        qlist = new ArrayList<String>();
         final List<String> valdate_list=new ArrayList<>();
-        final List<String> quantity_list=new ArrayList<>();
+         quantity_list=new ArrayList<>();
         Log.e("CreatePO", "Site name "+site);
         customersite.setText(site);
+       qlist= (ArrayList<String>) quote.getQuality();
+       quantity_list= (ArrayList<String>) quote.getQuantity();
+        for(int k=0;k<qlist.size();k++)
+        {
+            quality[k].setText(qlist.get(k));
+            quantity[k].setText(quantity_list.get(k));
+            priceview[k].setText(price_list.get(k));
 
+        }
+        for(int z=qlist.size();z<5;z++)
+        {
+            linearLayouts[z].setVisibility(View.GONE);
+        }
        cust_id=quote.getCustomerSite();
        povalid=i.getStringExtra("valdate");
-        Log.e("TAG","valdate"+povalid+cust_id+quote.getQuality());
+        Date date4 = new Date(Long.parseLong(povalid));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM,yyyy", Locale.ENGLISH);
+        Log.e("TAG","valdate"+povalid+cust_id);
         List<String> list1 = new ArrayList<String>();
         ArrayAdapter<String> adapter1;
-
+        Log.e("CreatePO","qual and quan list"+qlist+quantity_list+"Supplier name"+supp_name);
          supplier.setText(supp_name);
-         quality1.setText(quote.getQuality());
+         price_string=price1;
+        // quality1.setText(quote.getQuality());
                 Log.e("TAG","suppid"+supp_id);
                 Log.e("TAG","price"+price_string);
                Log.e("TAG","User"+quote.getRequestedBy()+quote.getRequestedById());
 
-                quantity.setText(quote.getQuantity());
-                if(price_string!=-1)
-                { price.setText(String.valueOf(price_string));}
+          //      quantity.setText(quote.getQuantity());
+
                 if(!povalid.equals("val"))
-                {validtill.setText(povalid);}
+                {validtill.setText(formatter.format(date4));}
 
 
 
@@ -160,30 +197,21 @@ public class CreatePO extends AppCompatActivity {
             validtill.requestFocus();
             return;
         }
-        if(quantity.getText().toString().isEmpty()){
-            quantity.setError("Required Field");
-            quantity.requestFocus();
-            return;
-        }
 
-        if(price.getText().toString().isEmpty()){
-            price.setError("Required Field");
-            customersite.requestFocus();
-            return;
-        }
-        createPO(quantity.getText().toString(),quote.getQuality());
+
+        createPO();
     }
 
-    private void createPO(String quantity, String quality)
+    private void createPO()
     {
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
         Map<String,String> map=new HashMap<>();
 
         String s=quote.getRequestedByCompany();
         map.put("validTill",povalid);
-        map.put("quantity",quantity);
-        map.put("quality",quality);
-        map.put("price", String.valueOf(price_string));
+       // map.put("quantity",);
+        //map.put("quality",quality);
+        //map.put("price", String.valueOf(price_string));
         map.put("customerSite",cust_id);
         map.put("requestedBy",quote.getRequestedBy());
         map.put("requestedById",quote.getRequestedById());
@@ -193,7 +221,7 @@ public class CreatePO extends AppCompatActivity {
         else {
             map.put("companyName",quote.getRequestedByCompany());
         }
-        Call<ResponseBody> call=retrofitInterface.create_po(token,map);
+        Call<ResponseBody> call=retrofitInterface.create_po(token,map,qlist,quantity_list,price_list);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -51,7 +51,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("/api/createpo")
-    Call<ResponseBody>create_po(@Header("authorization")String authtoken,@FieldMap Map<String,String> map);
+    Call<ResponseBody>create_po(@Header("authorization")String authtoken,@FieldMap Map<String,String> map,@Field("quality") List<String> qual,@Field("quantity") List<String> quan,@Field("price") List<String> price);
 
     @FormUrlEncoded
     @POST("/api/deletepo")
@@ -59,7 +59,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("/api/addorder")
-    Call<ResponseBody>submit_order(@Header("authorization") String authtoken,@FieldMap Map<String,String> map);
+    Call<ResponseBody>submit_order(@Header("authorization") String authtoken,@FieldMap Map<String,String> map,@Field("quality") List<String> qual,@Field("quantity") List<String> quan);
 
     @FormUrlEncoded
     @POST("/api/cancelorder")

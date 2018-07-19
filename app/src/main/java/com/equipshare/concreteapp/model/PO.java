@@ -8,28 +8,17 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PO implements Parcelable {
-    @SerializedName("_id")
-    @Expose
-    private String id;
     @SerializedName("generationDate")
     @Expose
     private String generationDate;
     @SerializedName("validTill")
     @Expose
     private String validTill;
-    @SerializedName("quantity")
-    @Expose
-    private String quantity;
-    @SerializedName("quality")
-    @Expose
-    private String quality;
-    @SerializedName("price")
-    @Expose
-    private Integer price;
-    @SerializedName("remQuantity")
-    @Expose
-    private Integer remQuantity;
     @SerializedName("customerSite")
     @Expose
     private String customerSite;
@@ -38,27 +27,25 @@ public class PO implements Parcelable {
     private String requestedBy;
     @SerializedName("requestedById")
     @Expose
-    private String requestedById;
+    private Integer requestedById;
     @SerializedName("supplierId")
     @Expose
-    private String supplierId;
-    @SerializedName("__v")
+    private Integer supplierId;
+    @SerializedName("requestedByCompany")
     @Expose
-    private Integer v;
-    @SerializedName("deletedByContractor")
-    @Expose
-    private String deletedByContractor;
+    private String requestedByCompany;
     @SerializedName("confirmedBySupplier")
     @Expose
     private String confirmedBySupplier;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    @SerializedName("POId")
+    @Expose
+    private Integer pOId;
+    @SerializedName("deletedByContractor")
+    @Expose
+    private String deletedByContractor;
+    @SerializedName("values")
+    @Expose
+    private List<Value> values = null;
 
     public String getGenerationDate() {
         return generationDate;
@@ -76,37 +63,6 @@ public class PO implements Parcelable {
         this.validTill = validTill;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getQuality() {
-        return quality;
-    }
-
-    public void setQuality(String quality) {
-        this.quality = quality;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getRemQuantity() {
-        return remQuantity;
-    }
-
-    public void setRemQuantity(Integer remQuantity) {
-        this.remQuantity = remQuantity;
-    }
     public String getCustomerSite() {
         return customerSite;
     }
@@ -123,36 +79,28 @@ public class PO implements Parcelable {
         this.requestedBy = requestedBy;
     }
 
-    public String getRequestedById() {
+    public Integer getRequestedById() {
         return requestedById;
     }
 
-    public void setRequestedById(String requestedById) {
+    public void setRequestedById(Integer requestedById) {
         this.requestedById = requestedById;
     }
 
-    public String getSupplierId() {
+    public Integer getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(String supplierId) {
+    public void setSupplierId(Integer supplierId) {
         this.supplierId = supplierId;
     }
 
-    public Integer getV() {
-        return v;
+    public String getRequestedByCompany() {
+        return requestedByCompany;
     }
 
-    public void setV(Integer v) {
-        this.v = v;
-    }
-
-    public String getDeletedByContractor() {
-        return deletedByContractor;
-    }
-
-    public void setDeletedByContractor(String  deletedByContractor) {
-        this.deletedByContractor = deletedByContractor;
+    public void setRequestedByCompany(String requestedByCompany) {
+        this.requestedByCompany = requestedByCompany;
     }
 
     public String getConfirmedBySupplier() {
@@ -163,6 +111,30 @@ public class PO implements Parcelable {
         this.confirmedBySupplier = confirmedBySupplier;
     }
 
+    public Integer getPOId() {
+        return pOId;
+    }
+
+    public void setPOId(Integer pOId) {
+        this.pOId = pOId;
+    }
+
+    public String getDeletedByContractor() {
+        return deletedByContractor;
+    }
+
+    public void setDeletedByContractor(String deletedByContractor) {
+        this.deletedByContractor = deletedByContractor;
+    }
+
+    public List<Value> getValues() {
+        return values;
+    }
+
+    public void setValues(List<Value> values) {
+        this.values = values;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -170,38 +142,35 @@ public class PO implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
         dest.writeString(this.generationDate);
         dest.writeString(this.validTill);
-        dest.writeString(this.quantity);
-        dest.writeString(this.quality);
-        dest.writeValue(this.price);
         dest.writeString(this.customerSite);
         dest.writeString(this.requestedBy);
-        dest.writeString(this.requestedById);
-        dest.writeString(this.supplierId);
-        dest.writeValue(this.v);
-        dest.writeValue(this.deletedByContractor);
-        dest.writeValue(this.confirmedBySupplier);
+        dest.writeValue(this.requestedById);
+        dest.writeValue(this.supplierId);
+        dest.writeString(this.requestedByCompany);
+        dest.writeString(this.confirmedBySupplier);
+        dest.writeValue(this.pOId);
+        dest.writeString(this.deletedByContractor);
+        dest.writeList(this.values);
     }
 
     public PO() {
     }
 
     protected PO(Parcel in) {
-        this.id = in.readString();
         this.generationDate = in.readString();
         this.validTill = in.readString();
-        this.quantity = in.readString();
-        this.quality = in.readString();
-        this.price = (Integer) in.readValue(Integer.class.getClassLoader());
         this.customerSite = in.readString();
         this.requestedBy = in.readString();
-        this.requestedById = in.readString();
-        this.supplierId = in.readString();
-        this.v = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.deletedByContractor = (String) in.readValue(String.class.getClassLoader());
-        this.confirmedBySupplier = (String) in.readValue(String.class.getClassLoader());
+        this.requestedById = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.supplierId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.requestedByCompany = in.readString();
+        this.confirmedBySupplier = in.readString();
+        this.pOId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.deletedByContractor = in.readString();
+        this.values = new ArrayList<Value>();
+        in.readList(this.values, Value.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<PO> CREATOR = new Parcelable.Creator<PO>() {

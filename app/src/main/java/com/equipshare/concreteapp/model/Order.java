@@ -8,40 +8,38 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order implements Parcelable {
-    @SerializedName("_id")
+    @SerializedName("orderId")
     @Expose
-    private String id;
+    private Integer orderId;
     @SerializedName("generationDate")
     @Expose
     private String generationDate;
     @SerializedName("requiredByDate")
     @Expose
     private String requiredByDate;
-    @SerializedName("quality")
-    @Expose
-    private String quality;
-    @SerializedName("quantity")
-    @Expose
-    private String quantity;
     @SerializedName("requestedBy")
     @Expose
     private String requestedBy;
     @SerializedName("requestedById")
     @Expose
-    private String requestedById;
+    private Integer requestedById;
     @SerializedName("supplierId")
     @Expose
-    private String supplierId;
-    @SerializedName("price")
-    @Expose
-    private String price;
+    private Integer supplierId;
     @SerializedName("companyName")
     @Expose
     private String companyName;
     @SerializedName("customerSite")
     @Expose
     private String customerSite;
+    @SerializedName("POId")
+    @Expose
+    private Integer pOId;
     @SerializedName("status")
     @Expose
     private String status;
@@ -51,16 +49,16 @@ public class Order implements Parcelable {
     @SerializedName("statusDesc")
     @Expose
     private String statusDesc;
-    @SerializedName("__v")
+    @SerializedName("data")
     @Expose
-    private Integer v;
+    private List<Datum> data = null;
 
-    public String getId() {
-        return id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public String getGenerationDate() {
@@ -79,22 +77,6 @@ public class Order implements Parcelable {
         this.requiredByDate = requiredByDate;
     }
 
-    public String getQuality() {
-        return quality;
-    }
-
-    public void setQuality(String quality) {
-        this.quality = quality;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
     public String getRequestedBy() {
         return requestedBy;
     }
@@ -103,28 +85,20 @@ public class Order implements Parcelable {
         this.requestedBy = requestedBy;
     }
 
-    public String getRequestedById() {
+    public Integer getRequestedById() {
         return requestedById;
     }
 
-    public void setRequestedById(String requestedById) {
+    public void setRequestedById(Integer requestedById) {
         this.requestedById = requestedById;
     }
 
-    public String getSupplierId() {
+    public Integer getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(String supplierId) {
+    public void setSupplierId(Integer supplierId) {
         this.supplierId = supplierId;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public String getCompanyName() {
@@ -141,6 +115,14 @@ public class Order implements Parcelable {
 
     public void setCustomerSite(String customerSite) {
         this.customerSite = customerSite;
+    }
+
+    public Integer getPOId() {
+        return pOId;
+    }
+
+    public void setPOId(Integer pOId) {
+        this.pOId = pOId;
     }
 
     public String getStatus() {
@@ -167,12 +149,15 @@ public class Order implements Parcelable {
         this.statusDesc = statusDesc;
     }
 
-    public Integer getV() {
-        return v;
+    public List<Datum> getData() {
+        return data;
     }
 
-    public void setV(Integer v) {
-        this.v = v;
+    public void setData(List<Datum> data) {
+        this.data = data;
+    }
+
+    public Order() {
     }
 
     @Override
@@ -182,45 +167,39 @@ public class Order implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeValue(this.orderId);
         dest.writeString(this.generationDate);
         dest.writeString(this.requiredByDate);
-        dest.writeString(this.quality);
-        dest.writeString(this.quantity);
         dest.writeString(this.requestedBy);
-        dest.writeString(this.requestedById);
-        dest.writeString(this.supplierId);
-        dest.writeString(this.price);
+        dest.writeValue(this.requestedById);
+        dest.writeValue(this.supplierId);
         dest.writeString(this.companyName);
         dest.writeString(this.customerSite);
+        dest.writeValue(this.pOId);
         dest.writeString(this.status);
         dest.writeString(this.statusDate);
         dest.writeString(this.statusDesc);
-        dest.writeValue(this.v);
-    }
-
-    public Order() {
+        dest.writeList(this.data);
     }
 
     protected Order(Parcel in) {
-        this.id = in.readString();
+        this.orderId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.generationDate = in.readString();
         this.requiredByDate = in.readString();
-        this.quality = in.readString();
-        this.quantity = in.readString();
         this.requestedBy = in.readString();
-        this.requestedById = in.readString();
-        this.supplierId = in.readString();
-        this.price = in.readString();
+        this.requestedById = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.supplierId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.companyName = in.readString();
         this.customerSite = in.readString();
+        this.pOId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.status = in.readString();
         this.statusDate = in.readString();
         this.statusDesc = in.readString();
-        this.v = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.data = new ArrayList<Datum>();
+        in.readList(this.data, Datum.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
         @Override
         public Order createFromParcel(Parcel source) {
             return new Order(source);

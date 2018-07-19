@@ -6,7 +6,7 @@ package com.equipshare.concreteapp.utils;
 
 public class Constants {
 
-    public static final String BASE_URL = "http://18.222.10.104/";
+    public static final String BASE_URL = "http://c1217bde.ngrok.io/";
 
 
 }

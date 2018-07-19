@@ -25,8 +25,7 @@ public class PurchaseTabs extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position)
         {
-            case 0: AskQuote askQuote=new AskQuote();
-                return askQuote;
+
             case 1: AvailablePO availablePO=new AvailablePO();
                 return availablePO;
 

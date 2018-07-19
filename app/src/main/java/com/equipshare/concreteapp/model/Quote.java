@@ -11,15 +11,15 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Quote implements Parcelable {
-    @SerializedName("_id")
+    @SerializedName("quoteId")
     @Expose
     private String id;
     @SerializedName("quantity")
     @Expose
-    private String quantity;
+    private List<String> quantity = null;
     @SerializedName("quality")
     @Expose
-    private String quality;
+    private List<String> quality = null;
     @SerializedName("customerSite")
     @Expose
     private String customerSite;
@@ -41,6 +41,9 @@ public class Quote implements Parcelable {
     @SerializedName("requestedByCompany")
     @Expose
     private String requestedByCompany;
+    @SerializedName("price")
+    @Expose
+    private Price price = null;
     @SerializedName("responses")
     @Expose
     private List<Response> responses = null;
@@ -61,21 +64,21 @@ public class Quote implements Parcelable {
         this.requestedByCompany = requestedByCompany;
     }
 
-    public String getQuantity() {
+    public List<String> getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(List<String> quantity) {
         this.quantity = quantity;
     }
 
-    public String getQuality() {
+    public List<String> getQuality() {
         return quality;
     }
 
-    public void setQuality(String quality) {
-        this.quality = quality;
-    }
+    public void setQuality(List<String> quality) {
+        this.quality = quality;}
+
 
     public String getCustomerSite() {
         return customerSite;
@@ -124,6 +127,13 @@ public class Quote implements Parcelable {
     public void setV(Integer v) {
         this.v = v;
     }
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
 
     public List<Response> getResponses() {
         return responses;
@@ -145,8 +155,8 @@ public class Quote implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
-        dest.writeString(this.quantity);
-        dest.writeString(this.quality);
+        dest.writeStringList(this.quantity);
+        dest.writeStringList(this.quality);
         dest.writeString(this.customerSite);
         dest.writeString(this.generationDate);
         dest.writeString(this.requiredDate);
@@ -154,13 +164,14 @@ public class Quote implements Parcelable {
         dest.writeString(this.requestedById);
         dest.writeValue(this.v);
         dest.writeString(this.requestedByCompany);
+        dest.writeParcelable(this.price, flags);
         dest.writeTypedList(this.responses);
     }
 
     protected Quote(Parcel in) {
         this.id = in.readString();
-        this.quantity = in.readString();
-        this.quality = in.readString();
+        this.quantity = in.createStringArrayList();
+        this.quality = in.createStringArrayList();
         this.customerSite = in.readString();
         this.generationDate = in.readString();
         this.requiredDate = in.readString();
@@ -168,6 +179,7 @@ public class Quote implements Parcelable {
         this.requestedById = in.readString();
         this.v = (Integer) in.readValue(Integer.class.getClassLoader());
         this.requestedByCompany = in.readString();
+        this.price = in.readParcelable(Price.class.getClassLoader());
         this.responses = in.createTypedArrayList(Response.CREATOR);
     }
 

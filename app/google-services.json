@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "260838995718",
+    "firebase_url": "https://concreteapp-208720.firebaseio.com",
+    "project_id": "concreteapp-208720",
+    "storage_bucket": "concreteapp-208720.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260838995718:android:36b84e12bade1f10",
+        "android_client_info": {
+          "package_name": "com.equipshare.concreteapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260838995718-52ch03a5egbmm7g4m4qq3vb9ltqr5dj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaDBxDrZsW9wlMVJ-UT0KxxFHRKK0CWI0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

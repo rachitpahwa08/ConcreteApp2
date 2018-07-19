@@ -19,11 +19,14 @@
             android:title="Purchase Orders" />
         <item
             android:id="@+id/site"
-            android:title="Customer Site"
+            android:title="Construction Site"
             />
         <item
             android:id="@+id/issue"
             android:title="Issue"/>
+        <item
+            android:id="@+id/qr_scanner"
+            android:title="QR Scanner"/>
 
         <item
             android:id="@+id/logout"

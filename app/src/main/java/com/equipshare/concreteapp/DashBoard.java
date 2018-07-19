@@ -30,6 +30,7 @@ import com.equipshare.concreteapp.model.User_;
 import com.equipshare.concreteapp.network.RetrofitInterface;
 import com.equipshare.concreteapp.utils.Constants;
 import com.equipshare.concreteapp.utils.SessionManagement;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -70,7 +71,7 @@ public class DashBoard extends AppCompatActivity
         setSupportActionBar(toolbar);
         session = new SessionManagement(getApplicationContext());
         HashMap<String, String> user1 = session.getUserDetails();
-
+        Log.e("Dashboard", "firebase token "+ FirebaseInstanceId.getInstance().getToken());
          token=user1.get(SessionManagement.KEY_TOKEN);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -96,7 +97,7 @@ public class DashBoard extends AppCompatActivity
     }
 
     private void profile_getrequest()
-    {
+    {Log.e("TAG", "response 33: " + token);
         Call<User_> call=retrofitInterface.show_profile(token);
         call.enqueue(new Callback<User_>() {
             @Override
@@ -192,7 +193,11 @@ public class DashBoard extends AppCompatActivity
         }
         else if (id == R.id.issue) {
              fragment=new Issue_fragment();
-        } else if (id == R.id.logout) {
+        } else if (id == R.id.qr_scanner) {
+            Intent intent=new Intent(DashBoard.this,QR_Reader.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.logout) {
             new AlertDialog.Builder(this)
                     .setTitle("Log Out")
                     .setMessage("Are you sure you want to Logout?")

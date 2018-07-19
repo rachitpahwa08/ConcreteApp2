@@ -100,31 +100,31 @@ public class RequestQuoteFragment extends android.support.v4.app.Fragment {
         quantity1[2]=(EditText)view.findViewById(R.id.quote_quantity3);
         quantity1[3]=(EditText)view.findViewById(R.id.quote_quantity4);
         quantity1[4]=(EditText)view.findViewById(R.id.quote_quantity5);
-        quantity1[5]=(EditText)view.findViewById(R.id.quote_quantity6);
+
         customersite=(Spinner)view.findViewById(R.id.customer_site_spinner);
         quality[0]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner1);
         quality[1]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner2);
         quality[2]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner3);
         quality[3]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner4);
         quality[4]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner5);
-        quality[5]=(Spinner)view.findViewById(R.id.quote_qualtiy_spinner6);
+
         Button submit=(Button)view.findViewById(R.id.submit_quote);
         quan_qual[0]=(LinearLayout)view.findViewById(R.id.quan_qual1);
         quan_qual[1]=(LinearLayout)view.findViewById(R.id.quan_qual2);
         quan_qual[2]=(LinearLayout)view.findViewById(R.id.quan_qual3);
         quan_qual[3]=(LinearLayout)view.findViewById(R.id.quan_qual4);
         quan_qual[4]=(LinearLayout)view.findViewById(R.id.quan_qual5);
-        quan_qual[5]=(LinearLayout)view.findViewById(R.id.quan_qual6);
+
         r1=(Button)view.findViewById(R.id.delete_button_1);
         r2=(Button)view.findViewById(R.id.delete_button_2);
         r3=(Button)view.findViewById(R.id.delete_button_3);
         r4=(Button)view.findViewById(R.id.delete_button_4);
-        r5=(Button)view.findViewById(R.id.delete_button_5);
+
         qual=new ArrayList<>();
         quan=new ArrayList<>();
         linearLayout=(LinearLayout)view.findViewById(R.id.request_quote);
         add=(Button)view.findViewById(R.id.add_button_d);
-       for(int j=1;j<6;j++)
+       for(int j=1;j<5;j++)
         {
             quan_qual[j].setVisibility(View.GONE);
 
@@ -149,9 +149,7 @@ add.setOnClickListener(new View.OnClickListener() {
            case 4:  quan_qual[4].setVisibility(View.VISIBLE);
                check=5;
                break;
-           case 5:  quan_qual[5].setVisibility(View.VISIBLE);
-                   check=6;
-                    break;
+
        }
       /*
     */}
@@ -222,25 +220,10 @@ add.setOnClickListener(new View.OnClickListener() {
                     quantity1[4].setText("");
                     check=4;
                 }
-                else {
-                    quantity1[4].setError("Please Remove Last Quantity and Quality");
-                    quantity1[4].requestFocus();
-                    return;
-                }
+
             }
         });
-        r5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("QuanCheck2", "value :"+check);
-               if(check==6) {
-                   quan_qual[5].setVisibility(View.GONE);
-                   quantity1[5].setError(null);
-                   quantity1[5].setText("");
-                   check = 5;
-               }
-            }
-        });
+
         request=(LinearLayout)view.findViewById(R.id.request_quote1);
         session = new SessionManagement(getContext());
         HashMap<String, String> user1 = session.getUserDetails();
@@ -341,6 +324,7 @@ add.setOnClickListener(new View.OnClickListener() {
             }
         });
 
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -353,12 +337,16 @@ add.setOnClickListener(new View.OnClickListener() {
                 progressDialog.setMessage("Processing");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+
+                qual.clear();
+                quan.clear();
+
                 for(int j=0;j<check;j++)
                 {
                     qual.add(quality[j].getSelectedItem().toString());
                     quan.add(quantity1[j].getText().toString());
-
                 }
+
                 Log.e("TAG", "quality" +qual);
                 startquote();
             }
@@ -407,7 +395,19 @@ add.setOnClickListener(new View.OnClickListener() {
         }
 
 
-
+        for(int c=0;c<qual.size();c++)
+        {
+            for(int d=c+1;d<qual.size();d++)
+            {
+                if(qual.get(c).equals(qual.get(d)))
+                {
+                quantity1[c].setError("Quality Can't be same");
+                quantity1[c].requestFocus();
+                progressDialog.cancel();
+                return;
+                }
+            }
+        }
         startRequsetQuote(quantity1[0].getText().toString(),quality[0].getSelectedItem().toString());
     }
 
@@ -457,6 +457,14 @@ add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+                if(t.getMessage().contains("timout"))
+                {
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle("Some Error Occurred")
+                            .setMessage("Try After Sometime")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", null).show();
+                }
             }
         });
     }

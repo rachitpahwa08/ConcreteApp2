@@ -82,15 +82,15 @@ public class AvailableQuote extends Fragment {
                 QuotesAdapter quotesAdapter=new QuotesAdapter(res1.getResults().getQuotes(),site,u,res1.getToken());
                 recyclerView.setAdapter(quotesAdapter);
                 progressDialog.cancel();
-                if(gridLayoutManager.getItemCount()==0)
+                /*if(gridLayoutManager.getItemCount()==0)
                 {
                     empty=(TextView)view.findViewById(R.id.emptyquote);
                     empty.setText("No Records Of Quotes Found");
                 }
-                else{
-                    View b = view.findViewById(R.id.emptyquote);
-                    b.setVisibility(View.GONE);
-                }
+                *//*else{
+                   *//**//* View b = view.findViewById(R.id.emptyquote);
+                    b.setVisibility(View.GONE);*//**//*
+                }*/
             }
 
             @Override

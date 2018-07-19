@@ -127,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordView.requestFocus();
             return;
         }
-        if(password.length()<3){
-            mPasswordView.setError("Minimum length of Password should be 6 characters");
+        if(password.length()<8){
+            mPasswordView.setError("Minimum length of Password should be 8 characters");
             mPasswordView.requestFocus();
             return;
         }
@@ -200,6 +200,14 @@ public class LoginActivity extends AppCompatActivity {
            public void onFailure(Call<Result> call, Throwable t) {
                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
                Log.e("TAG", "error: " + t);
+               if(t.getMessage().contains("timout"))
+               {
+                   new android.support.v7.app.AlertDialog.Builder(getApplicationContext())
+                           .setTitle("Some Error Occurred")
+                           .setMessage("Try After Sometime")
+                           .setCancelable(false)
+                           .setPositiveButton("ok", null).show();
+               }
                progressDialog.cancel();
            }
 

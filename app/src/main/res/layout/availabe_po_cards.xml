@@ -60,25 +60,19 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/PO_requestedby"
                         android:layout_width="match_parent"
+                        android:layout_marginTop="4dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
                         android:layout_weight="1"
                         android:text="Requested By:Username Surname" />
 
-                    <TextView
-                        android:id="@+id/price_PO"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:text="\u20B9 price" />
+
                 </LinearLayout>
 
                 <Button

@@ -25,7 +25,7 @@ public class User implements Parcelable {
     private String custType;
     @SerializedName("contact")
     @Expose
-    private Integer contact;
+    private long contact;
     @SerializedName("pan")
     @Expose
     private String pan;
@@ -83,7 +83,7 @@ public class User implements Parcelable {
         this.custType = custType;
     }
 
-    public Integer getContact() {
+    public long getContact() {
         return contact;
     }
 
@@ -185,7 +185,7 @@ public class User implements Parcelable {
         this.name = in.readString();
         this.email = in.readString();
         this.custType = in.readString();
-        this.contact = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.contact = (long) in.readValue(Integer.class.getClassLoader());
         this.pan = in.readString();
         this.company = in.readString();
         this.gstin = in.readString();

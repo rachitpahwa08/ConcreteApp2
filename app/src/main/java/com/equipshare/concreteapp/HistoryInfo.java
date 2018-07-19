@@ -46,6 +46,8 @@ public class HistoryInfo extends AppCompatActivity {
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).addConverterFactory(GsonConverterFactory.create(gson));
     Retrofit retrofit=builder.build();
     RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
+    TextView[] quality=new TextView[5];
+    TextView[] quantity=new TextView[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,16 +59,36 @@ public class HistoryInfo extends AppCompatActivity {
         order=i.getParcelableExtra("Order");
         String site=i.getStringExtra("ordersite");
         token=i.getStringExtra("token");
-        final TextView gendate,required_date,quality,quantity,requestedby,price,ordersite,statusdesc,supplier;
+        final TextView gendate,required_date,requestedby,price,ordersite,statusdesc,supplier;
         gendate=(TextView)findViewById(R.id.order_gen_date);
         required_date=(TextView)findViewById(R.id.order_required);
-        quality=(TextView)findViewById(R.id.order_quality);
-        quantity=(TextView)findViewById(R.id.order_quantity);
         requestedby=(TextView)findViewById(R.id.order_requestedby);
-        price=(TextView)findViewById(R.id.order_price);
+
         statusdesc=(TextView)findViewById(R.id.order_desc);
         ordersite=(TextView)findViewById(R.id.order_site);
         supplier=(TextView)findViewById(R.id.order_supplier);
+        quality[0]=(TextView)findViewById(R.id.order_quality1);
+        quality[1]=(TextView)findViewById(R.id.order_quality2);
+        quality[2]=(TextView)findViewById(R.id.order_quality3);
+        quality[3]=(TextView)findViewById(R.id.order_quality4);
+        quality[4]=(TextView)findViewById(R.id.order_quality5);
+        quantity[0]=(TextView)findViewById(R.id.order_quantity1);
+        quantity[1]=(TextView)findViewById(R.id.order_quantity2);
+        quantity[2]=(TextView)findViewById(R.id.order_quantity3);
+        quantity[3]=(TextView)findViewById(R.id.order_quantity4);
+        quantity[4]=(TextView)findViewById(R.id.order_quantity5);
+        Log.e("HistoryInfo", "Orders"+gson.toJson(order) );
+        for(int k=0;k<order.getData().size();k++)
+        {
+            quality[k].setText(order.getData().get(k).getQuality());
+            quantity[k].setText(order.getData().get(k).getQuantity());
+
+        }
+        for(int z=order.getData().size();z<5;z++)
+        {
+            quality[z].setVisibility(View.GONE);
+            quantity[z].setVisibility(View.GONE);
+        }
         final LinearLayout linearLayout=(LinearLayout)findViewById(R.id.history_info);
         Button issue=(Button)findViewById(R.id.issue_submit);
         issue.setOnClickListener(new View.OnClickListener() {
@@ -95,14 +117,11 @@ public class HistoryInfo extends AppCompatActivity {
         else
         {
             required_date.setText("Requested Delivery:"+order.getRequiredByDate());}
-        quality.setText("Quality:"+order.getQuality());
-        quantity.setText("Quantity:"+order.getQuantity());
         requestedby.setText("Order Requested By:"+order.getRequestedBy());
-        price.setText("Price:\u20B9"+order.getPrice());
         statusdesc.setText(order.getStatusDesc());
         ordersite.setText("Customer Site:"+order.getCustomerSite());
         retrofitInterface=retrofit.create(RetrofitInterface.class);
-        Call<Result> call=retrofitInterface.supp_name(order.getSupplierId());
+        Call<Result> call=retrofitInterface.supp_name(String.valueOf(order.getSupplierId()));
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -129,7 +148,7 @@ public class HistoryInfo extends AppCompatActivity {
             @Override
             public void onClick(final View view) {
                 final Map<String,String> map=new HashMap<>();
-                map.put("orderId",order.getId());
+                map.put("orderId", String.valueOf(order.getOrderId()));
                 new AlertDialog.Builder(HistoryInfo.this)
                         .setTitle("Cancel Order")
                         .setMessage("Are you sure you want to cancel order?")

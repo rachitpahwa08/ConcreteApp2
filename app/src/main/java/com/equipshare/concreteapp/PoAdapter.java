@@ -59,7 +59,7 @@ public class PoAdapter extends RecyclerView.Adapter<PoAdapter.PoViewHolder> {
 
 
         holder.gendate.setText(formatter.format(date));
-        holder.price.setText("\u20B9"+String.valueOf(poList.get(position).getPrice()));
+//        holder.price.setText("\u20B9"+String.valueOf(poList.get(position).getPrice()));
         Log.d("getcbs", poList.get(position).getConfirmedBySupplier());
         if(poList.get(position).getConfirmedBySupplier().equals("false")&&poList.get(position).getDeletedByContractor().equals("false"))
         {
@@ -78,7 +78,7 @@ public class PoAdapter extends RecyclerView.Adapter<PoAdapter.PoViewHolder> {
             public void onClick(View view) {
                 Intent i=new Intent(view.getContext(),POdetails.class);
                 i.putExtra("PO", po);
-                i.putExtra("customersite",getSitename(poList.get(position).getId()));
+                i.putExtra("customersite",getSitename(String.valueOf(poList.get(position).getPOId())));
                 i.putExtra("token",token);
                 view.getContext().startActivity(i);
             }

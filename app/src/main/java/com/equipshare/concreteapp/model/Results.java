@@ -3,7 +3,7 @@
 /**
  * Created by Jarvis on 21-02-2018.
  */
-
+/*
 package com.equipshare.concreteapp.model;
 
 import android.os.Parcel;
@@ -81,9 +81,9 @@ public class Results implements Parcelable {
             return new Results[size];
         }
     };
-}
+}*/
 
-/*package com.equipshare.concreteapp.model;
+package com.equipshare.concreteapp.model;
 
         import android.os.Parcel;
         import android.os.Parcelable;
@@ -160,4 +160,4 @@ public class Results implements Parcelable {
             return new Results[size];
         }
     };
-}*/
+}

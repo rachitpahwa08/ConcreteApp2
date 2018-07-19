@@ -1,5 +1,6 @@
 package com.equipshare.concreteapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ public class Issues extends AppCompatActivity {
     SessionManagement session;
     LinearLayout linearLayout;
     String token;
+    ProgressDialog progressDialog;
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
     public static Retrofit retrofit=builder.build();
@@ -58,6 +60,7 @@ public class Issues extends AppCompatActivity {
         issue_type=(Spinner)findViewById(R.id.issue_type);
         Button submit=(Button)findViewById(R.id.raise_issue);
         linearLayout=(LinearLayout)findViewById(R.id.issue);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +70,10 @@ public class Issues extends AppCompatActivity {
     }
     private void startissue(Order order1)
     {
+        progressDialog=new ProgressDialog(Issues.this);
+        progressDialog.setMessage("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         submit_issue(issue_title.getText().toString(),issue_desc.getText().toString(),issue_type.getSelectedItem().toString(),order1);
     }
 
@@ -76,12 +83,13 @@ public class Issues extends AppCompatActivity {
         Map<String,String> map=new HashMap<>();
         map.put("title",title);
         map.put("description",desc);
-        map.put("orderId",o1.getId());
+        map.put("orderId", String.valueOf(o1.getOrderId()));
         map.put("type",type);
         Call<ResponseBody> call=retrofitInterface.add_issue(token,map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+             progressDialog.cancel();
                 Snackbar snackbar = Snackbar
                         .make(linearLayout, "Issue Reported Successfully", Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.RED);
@@ -93,6 +101,7 @@ public class Issues extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+               progressDialog.cancel();
                 Toast.makeText(Issues.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
