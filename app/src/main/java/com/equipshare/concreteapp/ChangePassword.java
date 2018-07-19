@@ -103,6 +103,12 @@ public class ChangePassword extends AppCompatActivity {
             progressDialog.cancel();
             return;
         }
+        if(new_pass.length()<8){
+            new_pass.setError("Minimum length of Password should be 8 characters");
+            new_pass.requestFocus();
+            progressDialog.cancel();
+            return;
+        }
     changePass();
     }
 
